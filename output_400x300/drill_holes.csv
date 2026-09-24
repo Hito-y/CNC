@@ -1,10 +1,10 @@
 ﻿部品,面,基準軸1,位置1(端から mm),基準軸2,位置2(端から mm),穴径,加工,用途
 Y Frame Tube L,+X面(右)から貫通,Y,25,Z,19.5,Φ7,貫通,横桁締結 M6全ネジ
-Y Frame Tube L,+X面(右)から貫通,Y,436,Z,19.5,Φ7,貫通,横桁締結 M6全ネジ
-Y Frame Tube L,+X面(右)から貫通,Y,847,Z,19.5,Φ7,貫通,横桁締結 M6全ネジ
+Y Frame Tube L,+X面(右)から貫通,Y,386,Z,19.5,Φ7,貫通,横桁締結 M6全ネジ
+Y Frame Tube L,+X面(右)から貫通,Y,747,Z,19.5,Φ7,貫通,横桁締結 M6全ネジ
 Y Frame Tube L,+X面(右)から貫通,Y,25,Z,55.5,Φ7,貫通,横桁締結 M6全ネジ
-Y Frame Tube L,+X面(右)から貫通,Y,436,Z,55.5,Φ7,貫通,横桁締結 M6全ネジ
-Y Frame Tube L,+X面(右)から貫通,Y,847,Z,55.5,Φ7,貫通,横桁締結 M6全ネジ
+Y Frame Tube L,+X面(右)から貫通,Y,386,Z,55.5,Φ7,貫通,横桁締結 M6全ネジ
+Y Frame Tube L,+X面(右)から貫通,Y,747,Z,55.5,Φ7,貫通,横桁締結 M6全ネジ
 Y Frame Tube L,+Z面(上),X,25,Y,122,Φ4.2,片側の壁のみ,Yレール M5タップ
 Y Frame Tube L,+Z面(上),X,25,Y,182,Φ4.2,片側の壁のみ,Yレール M5タップ
 Y Frame Tube L,+Z面(上),X,25,Y,242,Φ4.2,片側の壁のみ,Yレール M5タップ
@@ -15,14 +15,12 @@ Y Frame Tube L,+Z面(上),X,25,Y,482,Φ4.2,片側の壁のみ,Yレール M5タ�
 Y Frame Tube L,+Z面(上),X,25,Y,542,Φ4.2,片側の壁のみ,Yレール M5タップ
 Y Frame Tube L,+Z面(上),X,25,Y,602,Φ4.2,片側の壁のみ,Yレール M5タップ
 Y Frame Tube L,+Z面(上),X,25,Y,662,Φ4.2,片側の壁のみ,Yレール M5タップ
-Y Frame Tube L,+Z面(上),X,25,Y,722,Φ4.2,片側の壁のみ,Yレール M5タップ
-Y Frame Tube L,+Z面(上),X,25,Y,782,Φ4.2,片側の壁のみ,Yレール M5タップ
 Y Frame Tube R,+X面(右)から貫通,Y,25,Z,19.5,Φ7,貫通,横桁締結 M6全ネジ
-Y Frame Tube R,+X面(右)から貫通,Y,436,Z,19.5,Φ7,貫通,横桁締結 M6全ネジ
-Y Frame Tube R,+X面(右)から貫通,Y,847,Z,19.5,Φ7,貫通,横桁締結 M6全ネジ
+Y Frame Tube R,+X面(右)から貫通,Y,386,Z,19.5,Φ7,貫通,横桁締結 M6全ネジ
+Y Frame Tube R,+X面(右)から貫通,Y,747,Z,19.5,Φ7,貫通,横桁締結 M6全ネジ
 Y Frame Tube R,+X面(右)から貫通,Y,25,Z,55.5,Φ7,貫通,横桁締結 M6全ネジ
-Y Frame Tube R,+X面(右)から貫通,Y,436,Z,55.5,Φ7,貫通,横桁締結 M6全ネジ
-Y Frame Tube R,+X面(右)から貫通,Y,847,Z,55.5,Φ7,貫通,横桁締結 M6全ネジ
+Y Frame Tube R,+X面(右)から貫通,Y,386,Z,55.5,Φ7,貫通,横桁締結 M6全ネジ
+Y Frame Tube R,+X面(右)から貫通,Y,747,Z,55.5,Φ7,貫通,横桁締結 M6全ネジ
 Y Frame Tube R,+Z面(上),X,25,Y,122,Φ4.2,片側の壁のみ,Yレール M5タップ
 Y Frame Tube R,+Z面(上),X,25,Y,182,Φ4.2,片側の壁のみ,Yレール M5タップ
 Y Frame Tube R,+Z面(上),X,25,Y,242,Φ4.2,片側の壁のみ,Yレール M5タップ
@@ -33,16 +31,14 @@ Y Frame Tube R,+Z面(上),X,25,Y,482,Φ4.2,片側の壁のみ,Yレール M5タ�
 Y Frame Tube R,+Z面(上),X,25,Y,542,Φ4.2,片側の壁のみ,Yレール M5タップ
 Y Frame Tube R,+Z面(上),X,25,Y,602,Φ4.2,片側の壁のみ,Yレール M5タップ
 Y Frame Tube R,+Z面(上),X,25,Y,662,Φ4.2,片側の壁のみ,Yレール M5タップ
-Y Frame Tube R,+Z面(上),X,25,Y,722,Φ4.2,片側の壁のみ,Yレール M5タップ
-Y Frame Tube R,+Z面(上),X,25,Y,782,Φ4.2,片側の壁のみ,Yレール M5タップ
 X Frame Tube 1,+Z面(上),X,54.5,Y,13,Φ4.2,片側の壁のみ,Y HM12-57 台座 M5タップ
-X Frame Tube 1,+Z面(上),X,470.5,Y,13,Φ4.2,片側の壁のみ,Y HM12-57 台座 M5タップ
+X Frame Tube 1,+Z面(上),X,570.5,Y,13,Φ4.2,片側の壁のみ,Y HM12-57 台座 M5タップ
 X Frame Tube 1,+Z面(上),X,54.5,Y,37,Φ4.2,片側の壁のみ,Y HM12-57 台座 M5タップ
-X Frame Tube 1,+Z面(上),X,470.5,Y,37,Φ4.2,片側の壁のみ,Y HM12-57 台座 M5タップ
+X Frame Tube 1,+Z面(上),X,570.5,Y,37,Φ4.2,片側の壁のみ,Y HM12-57 台座 M5タップ
 X Frame Tube 3,+Z面(上),X,54.5,Y,13,Φ4.2,片側の壁のみ,Y BF12 台座 M5タップ
-X Frame Tube 3,+Z面(上),X,470.5,Y,13,Φ4.2,片側の壁のみ,Y BF12 台座 M5タップ
+X Frame Tube 3,+Z面(上),X,570.5,Y,13,Φ4.2,片側の壁のみ,Y BF12 台座 M5タップ
 X Frame Tube 3,+Z面(上),X,54.5,Y,37,Φ4.2,片側の壁のみ,Y BF12 台座 M5タップ
-X Frame Tube 3,+Z面(上),X,470.5,Y,37,Φ4.2,片側の壁のみ,Y BF12 台座 M5タップ
+X Frame Tube 3,+Z面(上),X,570.5,Y,37,Φ4.2,片側の壁のみ,Y BF12 台座 M5タップ
 Y Roller L,+Z面(上),X,11,Y,30,Φ12,片側の壁のみ,工具挿入穴 (M6頭用)
 Y Roller L,+Z面(上),X,64,Y,30,Φ12,片側の壁のみ,工具挿入穴 (M6頭用)
 Y Roller L,+Z面(上),X,11,Y,70,Φ12,片側の壁のみ,工具挿入穴 (M6頭用)
@@ -158,10 +154,12 @@ X Gantry Tube Lower,-Y面(手前),X,375,Z,37.5,Φ4.2,片側の壁のみ,Xレー�
 X Gantry Tube Lower,-Y面(手前),X,435,Z,37.5,Φ4.2,片側の壁のみ,Xレール M5タップ
 X Gantry Tube Lower,-Y面(手前),X,495,Z,37.5,Φ4.2,片側の壁のみ,Xレール M5タップ
 X Gantry Tube Lower,-Y面(手前),X,555,Z,37.5,Φ4.2,片側の壁のみ,Xレール M5タップ
+X Gantry Tube Lower,-Y面(手前),X,615,Z,37.5,Φ4.2,片側の壁のみ,Xレール M5タップ
+X Gantry Tube Lower,-Y面(手前),X,675,Z,37.5,Φ4.2,片側の壁のみ,Xレール M5タップ
 X Gantry Tube Upper,+Z面(上),X,28,Y,25,Φ4.2,片側の壁のみ,X BF12 台座 M5タップ
 X Gantry Tube Upper,+Z面(上),X,52,Y,25,Φ4.2,片側の壁のみ,X BF12 台座 M5タップ
-X Gantry Tube Upper,+Z面(上),X,598,Y,25,Φ4.2,片側の壁のみ,X HM12-57 台座 M5タップ
-X Gantry Tube Upper,+Z面(上),X,622,Y,25,Φ4.2,片側の壁のみ,X HM12-57 台座 M5タップ
+X Gantry Tube Upper,+Z面(上),X,698,Y,25,Φ4.2,片側の壁のみ,X HM12-57 台座 M5タップ
+X Gantry Tube Upper,+Z面(上),X,722,Y,25,Φ4.2,片側の壁のみ,X HM12-57 台座 M5タップ
 X Gantry Tube Upper,-Y面(手前),X,75,Z,37.5,Φ4.2,片側の壁のみ,Xレール M5タップ
 X Gantry Tube Upper,-Y面(手前),X,135,Z,37.5,Φ4.2,片側の壁のみ,Xレール M5タップ
 X Gantry Tube Upper,-Y面(手前),X,195,Z,37.5,Φ4.2,片側の壁のみ,Xレール M5タップ
@@ -171,6 +169,8 @@ X Gantry Tube Upper,-Y面(手前),X,375,Z,37.5,Φ4.2,片側の壁のみ,Xレー�
 X Gantry Tube Upper,-Y面(手前),X,435,Z,37.5,Φ4.2,片側の壁のみ,Xレール M5タップ
 X Gantry Tube Upper,-Y面(手前),X,495,Z,37.5,Φ4.2,片側の壁のみ,Xレール M5タップ
 X Gantry Tube Upper,-Y面(手前),X,555,Z,37.5,Φ4.2,片側の壁のみ,Xレール M5タップ
+X Gantry Tube Upper,-Y面(手前),X,615,Z,37.5,Φ4.2,片側の壁のみ,Xレール M5タップ
+X Gantry Tube Upper,-Y面(手前),X,675,Z,37.5,Φ4.2,片側の壁のみ,Xレール M5タップ
 X HM12-57 Spacer,+Z面(上)から貫通,X,22.5,Y,17,Φ4.2,貫通,HM12-57 取付 M5タップ
 X HM12-57 Spacer,+Z面(上)から貫通,X,10.5,Y,40,Φ5.5,貫通,台座固定 M5 皿ボルト
 X HM12-57 Spacer,+Z面(上)から貫通,X,34.5,Y,40,Φ5.5,貫通,台座固定 M5 皿ボルト

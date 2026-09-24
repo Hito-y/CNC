@@ -10,8 +10,8 @@ from dataclasses import dataclass, fields
 @dataclass
 class Params:
     # --- 加工範囲 (工具先端が届く範囲) ---
-    cut_x: float = 600.0
-    cut_y: float = 900.0
+    cut_x: float = 300.0
+    cut_y: float = 400.0
     cut_z: float = 150.0
 
     # --- 角パイプ (V4 標準: 75x50x3) ---

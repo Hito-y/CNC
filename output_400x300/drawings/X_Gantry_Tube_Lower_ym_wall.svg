@@ -1,8 +1,8 @@
-<svg xmlns="http://www.w3.org/2000/svg" width="375.0mm" height="109.5mm" viewBox="0 0 375.0 109.5" font-family="Noto Sans CJK JP, IPAGothic, Hiragino Sans, Yu Gothic, Meiryo, sans-serif">
-<rect x="0" y="0" width="375.0" height="109.5" fill="white"/>
-<text x="25.0" y="7" font-size="4">X Gantry Tube Upper — -Y面(手前)側から見た図  外形 650 x 75 mm</text>
+<svg xmlns="http://www.w3.org/2000/svg" width="425.0mm" height="109.5mm" viewBox="0 0 425.0 109.5" font-family="Noto Sans CJK JP, IPAGothic, Hiragino Sans, Yu Gothic, Meiryo, sans-serif">
+<rect x="0" y="0" width="425.0" height="109.5" fill="white"/>
+<text x="25.0" y="7" font-size="4">X Gantry Tube Lower — -Y面(手前)側から見た図  外形 750 x 75 mm</text>
 <text x="25.0" y="12" font-size="3" fill="#555">縮尺 1:2 (型紙ではない。寸法は穴位置表 CSV を使用)</text>
-<rect x="25.00" y="39.00" width="325.00" height="37.50" fill="none" stroke="black" stroke-width="0.3"/>
+<rect x="25.00" y="39.00" width="375.00" height="37.50" fill="none" stroke="black" stroke-width="0.3"/>
 <text x="25.0" y="81.5" font-size="3">原点 (X→, Z↑)</text>
 <circle cx="62.50" cy="57.75" r="1.05" fill="none" stroke="red" stroke-width="0.25"/>
 <path d="M60.50,57.75H64.50M62.50,55.75V59.75" stroke="red" stroke-width="0.15"/>
@@ -31,6 +31,12 @@
 <circle cx="302.50" cy="57.75" r="1.05" fill="none" stroke="red" stroke-width="0.25"/>
 <path d="M300.50,57.75H304.50M302.50,55.75V59.75" stroke="red" stroke-width="0.15"/>
 <text x="304.35" y="56.95" font-size="1.8">Φ4.2 (555, 37.5)</text>
+<circle cx="332.50" cy="57.75" r="1.05" fill="none" stroke="red" stroke-width="0.25"/>
+<path d="M330.50,57.75H334.50M332.50,55.75V59.75" stroke="red" stroke-width="0.15"/>
+<text x="334.35" y="56.95" font-size="1.8">Φ4.2 (615, 37.5)</text>
+<circle cx="362.50" cy="57.75" r="1.05" fill="none" stroke="red" stroke-width="0.25"/>
+<path d="M360.50,57.75H364.50M362.50,55.75V59.75" stroke="red" stroke-width="0.15"/>
+<text x="364.35" y="56.95" font-size="1.8">Φ4.2 (675, 37.5)</text>
 <path d="M25.0,104.5h50.00" stroke="black" stroke-width="0.5"/>
 <text x="25.0" y="103.0" font-size="2.5">100 mm</text>
 </svg>

@@ -1,8 +1,8 @@
 """簡易 PrintNC フレームを生成する。
 
 例:
-    python build.py                       # 既定値 (600 x 900 x 150)
-    python build.py --cut_x 800 --cut_y 1200
+    python build.py                       # 既定値 (300 x 400 x 150)
+    python build.py --cut_x 400 --cut_y 300 --out output_400x300
     python build.py --no-step --no-render # 表・図面だけ素早く更新
 """
 import argparse

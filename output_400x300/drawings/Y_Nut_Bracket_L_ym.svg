@@ -1,0 +1,24 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="125.0mm" height="147.0mm" viewBox="0 0 125.0 147.0" font-family="Noto Sans CJK JP, IPAGothic, Hiragino Sans, Yu Gothic, Meiryo, sans-serif">
+<rect x="0" y="0" width="125.0" height="147.0" fill="white"/>
+<text x="25.0" y="7" font-size="4">Y Nut Bracket L — -Y面(手前)から貫通側から見た図  外形 75 x 75 mm</text>
+<text x="25.0" y="12" font-size="3" fill="#555">縮尺 1:1 (100%で印刷して型紙に使用 / 基準辺を材料の端に合わせる)</text>
+<rect x="25.00" y="39.00" width="75.00" height="75.00" fill="none" stroke="black" stroke-width="0.3"/>
+<text x="25.0" y="119.0" font-size="3">原点 (X→, Z↑)</text>
+<circle cx="47.56" cy="97.44" r="2.75" fill="none" stroke="red" stroke-width="0.25"/>
+<path d="M45.56,97.44H49.56M47.56,95.44V99.44" stroke="red" stroke-width="0.15"/>
+<text x="51.11" y="96.64" font-size="2.2">Φ5.5 (22.6, 16.6)</text>
+<circle cx="74.44" cy="97.44" r="2.75" fill="none" stroke="red" stroke-width="0.25"/>
+<path d="M72.44,97.44H76.44M74.44,95.44V99.44" stroke="red" stroke-width="0.15"/>
+<text x="77.99" y="96.64" font-size="2.2">Φ5.5 (49.4, 16.6)</text>
+<circle cx="61.00" cy="84.00" r="14.50" fill="none" stroke="red" stroke-width="0.25"/>
+<path d="M59.00,84.00H63.00M61.00,82.00V86.00" stroke="red" stroke-width="0.15"/>
+<text x="76.30" y="83.20" font-size="2.2">Φ29 (36, 30)</text>
+<circle cx="47.56" cy="70.56" r="2.75" fill="none" stroke="red" stroke-width="0.25"/>
+<path d="M45.56,70.56H49.56M47.56,68.56V72.56" stroke="red" stroke-width="0.15"/>
+<text x="51.11" y="69.76" font-size="2.2">Φ5.5 (22.6, 43.4)</text>
+<circle cx="74.44" cy="70.56" r="2.75" fill="none" stroke="red" stroke-width="0.25"/>
+<path d="M72.44,70.56H76.44M74.44,68.56V72.56" stroke="red" stroke-width="0.15"/>
+<text x="77.99" y="69.76" font-size="2.2">Φ5.5 (49.4, 43.4)</text>
+<path d="M25.0,142.0h100.00" stroke="black" stroke-width="0.5"/>
+<text x="25.0" y="140.5" font-size="2.5">100 mm</text>
+</svg>

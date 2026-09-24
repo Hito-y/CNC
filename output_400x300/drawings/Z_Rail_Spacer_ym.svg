@@ -1,0 +1,27 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="70.0mm" height="422.0mm" viewBox="0 0 70.0 422.0" font-family="Noto Sans CJK JP, IPAGothic, Hiragino Sans, Yu Gothic, Meiryo, sans-serif">
+<rect x="0" y="0" width="70.0" height="422.0" fill="white"/>
+<text x="25.0" y="7" font-size="4">Z Rail Spacer — -Y面(手前)から貫通側から見た図  外形 20 x 350 mm</text>
+<text x="25.0" y="12" font-size="3" fill="#555">縮尺 1:1 (100%で印刷して型紙に使用 / 基準辺を材料の端に合わせる)</text>
+<rect x="25.00" y="39.00" width="20.00" height="350.00" fill="none" stroke="black" stroke-width="0.3"/>
+<text x="25.0" y="394.0" font-size="3">原点 (X→, Z↑)</text>
+<circle cx="35.00" cy="369.00" r="2.25" fill="none" stroke="red" stroke-width="0.25"/>
+<path d="M33.00,369.00H37.00M35.00,367.00V371.00" stroke="red" stroke-width="0.15"/>
+<text x="38.05" y="368.20" font-size="2.2">Φ4.5 (10, 20)</text>
+<circle cx="35.00" cy="309.00" r="2.25" fill="none" stroke="red" stroke-width="0.25"/>
+<path d="M33.00,309.00H37.00M35.00,307.00V311.00" stroke="red" stroke-width="0.15"/>
+<text x="38.05" y="308.20" font-size="2.2">Φ4.5 (10, 80)</text>
+<circle cx="35.00" cy="249.00" r="2.25" fill="none" stroke="red" stroke-width="0.25"/>
+<path d="M33.00,249.00H37.00M35.00,247.00V251.00" stroke="red" stroke-width="0.15"/>
+<text x="38.05" y="248.20" font-size="2.2">Φ4.5 (10, 140)</text>
+<circle cx="35.00" cy="189.00" r="2.25" fill="none" stroke="red" stroke-width="0.25"/>
+<path d="M33.00,189.00H37.00M35.00,187.00V191.00" stroke="red" stroke-width="0.15"/>
+<text x="38.05" y="188.20" font-size="2.2">Φ4.5 (10, 200)</text>
+<circle cx="35.00" cy="129.00" r="2.25" fill="none" stroke="red" stroke-width="0.25"/>
+<path d="M33.00,129.00H37.00M35.00,127.00V131.00" stroke="red" stroke-width="0.15"/>
+<text x="38.05" y="128.20" font-size="2.2">Φ4.5 (10, 260)</text>
+<circle cx="35.00" cy="69.00" r="2.25" fill="none" stroke="red" stroke-width="0.25"/>
+<path d="M33.00,69.00H37.00M35.00,67.00V71.00" stroke="red" stroke-width="0.15"/>
+<text x="38.05" y="68.20" font-size="2.2">Φ4.5 (10, 320)</text>
+<path d="M25.0,417.0h100.00" stroke="black" stroke-width="0.5"/>
+<text x="25.0" y="415.5" font-size="2.5">100 mm</text>
+</svg>

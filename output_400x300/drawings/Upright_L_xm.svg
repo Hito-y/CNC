@@ -1,0 +1,15 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="175.0mm" height="122.0mm" viewBox="0 0 175.0 122.0" font-family="Noto Sans CJK JP, IPAGothic, Hiragino Sans, Yu Gothic, Meiryo, sans-serif">
+<rect x="0" y="0" width="175.0" height="122.0" fill="white"/>
+<text x="25.0" y="7" font-size="4">Upright L — -X面(左)から貫通側から見た図  外形 125 x 50 mm</text>
+<text x="25.0" y="12" font-size="3" fill="#555">縮尺 1:1 (100%で印刷して型紙に使用 / 基準辺を材料の端に合わせる)</text>
+<rect x="25.00" y="39.00" width="125.00" height="50.00" fill="none" stroke="black" stroke-width="0.3"/>
+<text x="25.0" y="94.0" font-size="3">原点 (Z→, Y↑)</text>
+<circle cx="65.00" cy="64.00" r="3.30" fill="none" stroke="red" stroke-width="0.25"/>
+<path d="M63.00,64.00H67.00M65.00,62.00V66.00" stroke="red" stroke-width="0.15"/>
+<text x="69.10" y="63.20" font-size="2.2">Φ6.6 (40, 25)</text>
+<circle cx="105.00" cy="64.00" r="3.30" fill="none" stroke="red" stroke-width="0.25"/>
+<path d="M103.00,64.00H107.00M105.00,62.00V66.00" stroke="red" stroke-width="0.15"/>
+<text x="109.10" y="63.20" font-size="2.2">Φ6.6 (80, 25)</text>
+<path d="M25.0,117.0h100.00" stroke="black" stroke-width="0.5"/>
+<text x="25.0" y="115.5" font-size="2.5">100 mm</text>
+</svg>

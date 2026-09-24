@@ -1,0 +1,39 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="350.0mm" height="397.0mm" viewBox="0 0 350.0 397.0" font-family="Noto Sans CJK JP, IPAGothic, Hiragino Sans, Yu Gothic, Meiryo, sans-serif">
+<rect x="0" y="0" width="350.0" height="397.0" fill="white"/>
+<text x="25.0" y="7" font-size="4">Y Roller Brace Outer R — +X面(右)から貫通側から見た図  外形 300 x 325 mm</text>
+<text x="25.0" y="12" font-size="3" fill="#555">縮尺 1:1 (100%で印刷して型紙に使用 / 基準辺を材料の端に合わせる)</text>
+<rect x="25.00" y="39.00" width="300.00" height="325.00" fill="none" stroke="black" stroke-width="0.3"/>
+<text x="25.0" y="369.0" font-size="3">原点 (Y→, Z↑)</text>
+<circle cx="75.00" cy="339.00" r="3.30" fill="none" stroke="red" stroke-width="0.25"/>
+<path d="M73.00,339.00H77.00M75.00,337.00V341.00" stroke="red" stroke-width="0.15"/>
+<text x="79.10" y="338.20" font-size="2.2">Φ6.6 (50, 25)</text>
+<circle cx="155.00" cy="339.00" r="3.30" fill="none" stroke="red" stroke-width="0.25"/>
+<path d="M153.00,339.00H157.00M155.00,337.00V341.00" stroke="red" stroke-width="0.15"/>
+<text x="159.10" y="338.20" font-size="2.2">Φ6.6 (130, 25)</text>
+<circle cx="195.00" cy="339.00" r="3.30" fill="none" stroke="red" stroke-width="0.25"/>
+<path d="M193.00,339.00H197.00M195.00,337.00V341.00" stroke="red" stroke-width="0.15"/>
+<text x="199.10" y="338.20" font-size="2.2">Φ6.6 (170, 25)</text>
+<circle cx="275.00" cy="339.00" r="3.30" fill="none" stroke="red" stroke-width="0.25"/>
+<path d="M273.00,339.00H277.00M275.00,337.00V341.00" stroke="red" stroke-width="0.15"/>
+<text x="279.10" y="338.20" font-size="2.2">Φ6.6 (250, 25)</text>
+<circle cx="175.00" cy="274.00" r="3.30" fill="none" stroke="red" stroke-width="0.25"/>
+<path d="M173.00,274.00H177.00M175.00,272.00V276.00" stroke="red" stroke-width="0.15"/>
+<text x="179.10" y="273.20" font-size="2.2">Φ6.6 (150, 90)</text>
+<circle cx="175.00" cy="234.00" r="3.30" fill="none" stroke="red" stroke-width="0.25"/>
+<path d="M173.00,234.00H177.00M175.00,232.00V236.00" stroke="red" stroke-width="0.15"/>
+<text x="179.10" y="233.20" font-size="2.2">Φ6.6 (150, 130)</text>
+<circle cx="175.00" cy="169.50" r="3.50" fill="none" stroke="red" stroke-width="0.25"/>
+<path d="M173.00,169.50H177.00M175.00,167.50V171.50" stroke="red" stroke-width="0.15"/>
+<text x="179.30" y="168.70" font-size="2.2">Φ7 (150, 194.5)</text>
+<circle cx="175.00" cy="133.50" r="3.50" fill="none" stroke="red" stroke-width="0.25"/>
+<path d="M173.00,133.50H177.00M175.00,131.50V135.50" stroke="red" stroke-width="0.15"/>
+<text x="179.30" y="132.70" font-size="2.2">Φ7 (150, 230.5)</text>
+<circle cx="175.00" cy="94.50" r="3.50" fill="none" stroke="red" stroke-width="0.25"/>
+<path d="M173.00,94.50H177.00M175.00,92.50V96.50" stroke="red" stroke-width="0.15"/>
+<text x="179.30" y="93.70" font-size="2.2">Φ7 (150, 269.5)</text>
+<circle cx="175.00" cy="58.50" r="3.50" fill="none" stroke="red" stroke-width="0.25"/>
+<path d="M173.00,58.50H177.00M175.00,56.50V60.50" stroke="red" stroke-width="0.15"/>
+<text x="179.30" y="57.70" font-size="2.2">Φ7 (150, 305.5)</text>
+<path d="M25.0,392.0h100.00" stroke="black" stroke-width="0.5"/>
+<text x="25.0" y="390.5" font-size="2.5">100 mm</text>
+</svg>
