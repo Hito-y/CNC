@@ -1,0 +1,27 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="393.0mm" height="90.8mm" viewBox="0 0 393.0 90.8" font-family="Noto Sans CJK JP, IPAGothic, Hiragino Sans, Yu Gothic, Meiryo, sans-serif">
+<rect x="0" y="0" width="393.0" height="90.8" fill="white"/>
+<text x="25.0" y="7" font-size="4">Y Frame Tube R — +X面(右)から貫通側から見た図  外形 1372 x 75 mm</text>
+<text x="25.0" y="12" font-size="3" fill="#555">縮尺 1:4 (型紙ではない。寸法は穴位置表 CSV を使用)</text>
+<rect x="25.00" y="39.00" width="343.00" height="18.75" fill="none" stroke="black" stroke-width="0.3"/>
+<text x="25.0" y="62.8" font-size="3">原点 (Y→, Z↑)</text>
+<circle cx="31.25" cy="52.88" r="0.88" fill="none" stroke="red" stroke-width="0.25"/>
+<path d="M29.25,52.88H33.25M31.25,50.88V54.88" stroke="red" stroke-width="0.15"/>
+<text x="32.92" y="52.08" font-size="1.8">Φ7 (25, 19.5)</text>
+<circle cx="196.50" cy="52.88" r="0.88" fill="none" stroke="red" stroke-width="0.25"/>
+<path d="M194.50,52.88H198.50M196.50,50.88V54.88" stroke="red" stroke-width="0.15"/>
+<text x="198.18" y="52.08" font-size="1.8">Φ7 (686, 19.5)</text>
+<circle cx="361.75" cy="52.88" r="0.88" fill="none" stroke="red" stroke-width="0.25"/>
+<path d="M359.75,52.88H363.75M361.75,50.88V54.88" stroke="red" stroke-width="0.15"/>
+<text x="363.43" y="52.08" font-size="1.8">Φ7 (1347, 19.5)</text>
+<circle cx="31.25" cy="43.88" r="0.88" fill="none" stroke="red" stroke-width="0.25"/>
+<path d="M29.25,43.88H33.25M31.25,41.88V45.88" stroke="red" stroke-width="0.15"/>
+<text x="32.92" y="43.08" font-size="1.8">Φ7 (25, 55.5)</text>
+<circle cx="196.50" cy="43.88" r="0.88" fill="none" stroke="red" stroke-width="0.25"/>
+<path d="M194.50,43.88H198.50M196.50,41.88V45.88" stroke="red" stroke-width="0.15"/>
+<text x="198.18" y="43.08" font-size="1.8">Φ7 (686, 55.5)</text>
+<circle cx="361.75" cy="43.88" r="0.88" fill="none" stroke="red" stroke-width="0.25"/>
+<path d="M359.75,43.88H363.75M361.75,41.88V45.88" stroke="red" stroke-width="0.15"/>
+<text x="363.43" y="43.08" font-size="1.8">Φ7 (1347, 55.5)</text>
+<path d="M25.0,85.75h25.00" stroke="black" stroke-width="0.5"/>
+<text x="25.0" y="84.25" font-size="2.5">100 mm</text>
+</svg>

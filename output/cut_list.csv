@@ -1,0 +1,34 @@
+﻿区分,部品,素材/型番,切断長(mm),外形(mm),数量,個別名,備考
+加工品,Y Frame Tubing,角パイプ 75x50x3,1372,1372 x 75 x 50,2,Y Frame Tube L / Y Frame Tube R,
+加工品,X Frame Tubing,角パイプ 75x50x3,825,825 x 75 x 50,3,X Frame Tube 1 / X Frame Tube 2 / X Frame Tube 3,Yチューブ間に突合せ、内部に M6 全ネジ 2本を通して締結
+加工品,Y Roller Tubing,角パイプ 75x50x3,300,300 x 75 x 50,2,Y Roller L / Y Roller R,
+加工品,Y Roller Tubing (upright),角パイプ 75x50x3,125,125 x 75 x 50,2,Upright L / Upright R,Yローラー上に立て、両側ブレースで挟んで締結
+加工品,Y Roller Brace (inner),平板 t=6 (鋼/アルミ),,300 x 170 x 6,2,Y Roller Brace Inner L / Y Roller Brace Inner R,
+加工品,Y Roller Brace (outer),平板 t=6 (鋼/アルミ),,325 x 300 x 6,2,Y Roller Brace Outer L / Y Roller Brace Outer R,
+加工品,Y Nut Bracket (angle),山形鋼 L75x75x6,75,75 x 75 x 75,2,Y Nut Bracket L / Y Nut Bracket R,V4 の印刷ナットマウントの代替
+加工品,Mount Spacer Plate,平鋼 t=10,,80 x 45 x 10,6,Y HM12-57 Spacer L / Y BF12 Spacer L / Y HM12-57 Spacer R / Y BF12 Spacer R / X HM12-57 Spacer / X BF12 Spacer,
+加工品,X Gantry Tubing,角パイプ 75x50x3,950,950 x 75 x 50,2,X Gantry Tube Lower / X Gantry Tube Upper,2段重ね。内部に M6 全ネジ 2本を通し両端の外側ブレースで締結
+加工品,X Roller Plate,アルミ板 t=12,,225 x 220 x 12,1,X Roller Plate,V4 の X Roller tubing + angle + shim の代替
+加工品,X Nut Bracket (angle),山形鋼 L100x75x10,60,100 x 75 x 60,1,X Nut Bracket,V4 の印刷ナットマウントの代替
+加工品,Z Plate (2Z),アルミ板 t=12,,350 x 165 x 12,1,Z Plate,V4 の 1Z Plate 相当。HGR15 ×2 をスペーサー経由で背面に固定
+加工品,Z Rail Spacer (flat bar),平鋼 20x10,350,350 x 20 x 10,2,Z Rail Spacer,ナットブロックの逃げ代を作る
+加工品,Z Top Angle,山形鋼 L75x75x8,80,80 x 75 x 75,1,Z Top Angle,HM10-57 を載せる。V4 印刷部品の代替
+購入品,HGR20 Rail (Y),HGR20 L=1220,,,2,Y Rail L / Y Rail R,
+購入品,HGW20CC Carriage,HGW20CC,,,8,Y Carriage L / Y Carriage R / X Carriage,
+購入品,M6 Threaded Rod (X base),M6 全ネジ L=955,,,6,Base Tie Rod,
+購入品,Wasteboard,合板/MDF t=25,,,1,Wasteboard,
+購入品,SFU1610 Ballscrew (Y),SFU1610 L≈1382,,,2,Y Ballscrew L / Y Ballscrew R,
+購入品,SFU1610 Nut,SFU1610,,,3,Y Nut L / Y Nut R / X Nut,
+購入品,HM12-57,HM12-57,,,3,HM12-57,
+購入品,NEMA23 Motor,NEMA23 57x57x76,,,4,NEMA23 Motor Y / NEMA23 Motor X / NEMA23 Motor Z,
+購入品,BF12,BF12,,,3,BF12,
+購入品,HGR20 Rail (X),HGR20 L=840,,,2,X Rail 1 / X Rail 2,
+購入品,M6 Threaded Rod (X gantry),M6 全ネジ L=992,,,4,Gantry Tie Rod,
+購入品,SFU1610 Ballscrew (X),SFU1610 L≈930,,,1,X Ballscrew,
+購入品,HGH15CA Carriage,HGH15CA,,,4,Z Carriage,
+購入品,HGR15 Rail (Z),HGR15 L=350,,,2,Z Rail,
+購入品,HM10-57,HM10-57,,,1,HM10-57,
+購入品,SFU1204 Ballscrew (Z),SFU1204 L≈320,,,1,Z Ballscrew,
+購入品,SFU1204 Nut + Block,SFU1204 + ナットブロック,,,1,Z Nut Block,
+購入品,80mm Spindle Clamp,80mm 3穴クランプ,,,1,Spindle Clamp,
+購入品,Spindle 80mm,Φ80 スピンドル,,,1,Spindle,

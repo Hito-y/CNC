@@ -1,0 +1,21 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="100.0mm" height="372.0mm" viewBox="0 0 100.0 372.0" font-family="Noto Sans CJK JP, IPAGothic, Hiragino Sans, Yu Gothic, Meiryo, sans-serif">
+<rect x="0" y="0" width="100.0" height="372.0" fill="white"/>
+<text x="25.0" y="7" font-size="4">Y Roller L — -X面(左)から貫通側から見た図  外形 50 x 300 mm</text>
+<text x="25.0" y="12" font-size="3" fill="#555">縮尺 1:1 (100%で印刷して型紙に使用 / 基準辺を材料の端に合わせる)</text>
+<rect x="25.00" y="39.00" width="50.00" height="300.00" fill="none" stroke="black" stroke-width="0.3"/>
+<text x="25.0" y="344.0" font-size="3">原点 (Z→, Y↑)</text>
+<circle cx="50.00" cy="289.00" r="3.30" fill="none" stroke="red" stroke-width="0.25"/>
+<path d="M48.00,289.00H52.00M50.00,287.00V291.00" stroke="red" stroke-width="0.15"/>
+<text x="54.10" y="288.20" font-size="2.2">Φ6.6 (25, 50)</text>
+<circle cx="50.00" cy="209.00" r="3.30" fill="none" stroke="red" stroke-width="0.25"/>
+<path d="M48.00,209.00H52.00M50.00,207.00V211.00" stroke="red" stroke-width="0.15"/>
+<text x="54.10" y="208.20" font-size="2.2">Φ6.6 (25, 130)</text>
+<circle cx="50.00" cy="169.00" r="3.30" fill="none" stroke="red" stroke-width="0.25"/>
+<path d="M48.00,169.00H52.00M50.00,167.00V171.00" stroke="red" stroke-width="0.15"/>
+<text x="54.10" y="168.20" font-size="2.2">Φ6.6 (25, 170)</text>
+<circle cx="50.00" cy="89.00" r="3.30" fill="none" stroke="red" stroke-width="0.25"/>
+<path d="M48.00,89.00H52.00M50.00,87.00V91.00" stroke="red" stroke-width="0.15"/>
+<text x="54.10" y="88.20" font-size="2.2">Φ6.6 (25, 250)</text>
+<path d="M25.0,367.0h100.00" stroke="black" stroke-width="0.5"/>
+<text x="25.0" y="365.5" font-size="2.5">100 mm</text>
+</svg>
