@@ -28,6 +28,17 @@
 | 印刷ドリルガイド・組立治具 (Frame Marker など) | 自動生成する **穴位置表 (CSV)** と **1:1 型紙 (SVG)**。組立時の直角は対角線を測って出す |
 | フレーム接合 | V4 と同じく溶接なし。M6 全ネジを角パイプの中に通して締結 (ベース横桁・ガントリー) |
 
+## 公式 .f3d を STEP に変換する (Fusion スクリプト)
+
+`.f3d` は Autodesk Fusion 専用の形式で、Fusion の外では読めない。
+[`tools/F3dToStep`](tools/F3dToStep/F3dToStep.py) は Fusion の中で動かす Python スクリプトで、次のことを行う。
+
+- 選んだ `.f3d` (複数可) を順に開いて `<名前>.step` を書き出す
+- ユーザーパラメータの一覧を `<名前>_params.csv` に書き出す
+- スクリプト先頭の `PARAM_OVERRIDES` に書いた値 (例: `XCuttingArea`) に変えてから書き出す。元の `.f3d` は変更しない
+
+実行方法: Fusion → ユーティリティ → アドイン → スクリプトとアドイン → スクリプトの「+」で `tools/F3dToStep` フォルダを追加 → 実行。
+
 ## 使い方
 
 ```bash

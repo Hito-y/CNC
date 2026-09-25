@@ -1,0 +1,10 @@
+{
+	"autodeskProduct": "Fusion",
+	"type": "script",
+	"author": "",
+	"description": {
+		"": "Convert .f3d files to STEP and dump user parameters to CSV"
+	},
+	"supportedOS": "windows|mac",
+	"editEnabled": true
+}
