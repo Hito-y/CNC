@@ -264,7 +264,6 @@ def _jp_font():
 # ----------------------------------------------------------------- summary
 def write_summary(p, L, parts, path, svgs, warns=()):
     fab, pur = cut_list(parts)
-    tip_lo = L.tip_min
     lines = [
         "# 簡易 PrintNC フレーム 設計サマリー",
         "",
@@ -274,23 +273,15 @@ def write_summary(p, L, parts, path, svgs, warns=()):
         "",
         "| 項目 | 値 |",
         "|---|---|",
-        f"| 加工範囲 X × Y × Z | {_fmt(p.cut_x)} × {_fmt(p.cut_y)} × {_fmt(p.cut_z)} |",
-        f"| フレーム外形 (X × Y) | {_fmt(L.y_span + p.tube_w)} × {_fmt(L.y_frame_len)} |",
-        f"| ガントリー上面高さ | {_fmt(L.z_gt)} |",
-        f"| 左右Yチューブ中心間 | {_fmt(L.y_span)} |",
-        f"| ガントリー長 | {_fmt(L.gantry_len)} |",
-        f"| X/Y レール長 | {_fmt(L.x_rail_len)} / {_fmt(L.y_rail_len)} |",
-        f"| ガントリー下面の高さ (捨て板上面から) | {_fmt(L.z_gb - L.wb_top)} |",
-        f"| 支柱の高さ | {_fmt(L.upright_h)} |",
-        f"| Zストローク | {_fmt(L.z_travel)} |",
-        f"| 工具先端の到達範囲 (捨て板上面基準) | {_fmt(tip_lo - L.wb_top)} 〜 {_fmt(L.tip_max - L.wb_top)} |",
-        f"| 主軸のガントリー中心からの前方オフセット | {_fmt(-L.sp_y_off)} |",
-        f"| 捨て板 (X × Y) | {_fmt(2 * L.wb_half_x)} × {_fmt(L.wb_y[1] - L.wb_y[0])} |",
+        *[f"| {k} | {v} |" for k, v in L.summary],
         "",
         "## 自動チェック",
         "",
         ("- 穴の縁距離・穴間の肉厚: すべて 3mm 以上" if not warns else
          "\n".join(f"- ⚠ {w}" for w in warns)),
+        *[f"- ⚠ {w}" for w in L.warnings],
+        "",
+        "赤茶色の部品 (Xねじ/Yねじまわり) は V4 パラメータに情報がない仮置き。",
         "",
         "## 加工品 (切断リスト)",
         "",

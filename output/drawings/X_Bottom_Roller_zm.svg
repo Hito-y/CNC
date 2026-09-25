@@ -1,0 +1,33 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="150.0mm" height="222.0mm" viewBox="0 0 150.0 222.0" font-family="Noto Sans CJK JP, IPAGothic, Hiragino Sans, Yu Gothic, Meiryo, sans-serif">
+<rect x="0" y="0" width="150.0" height="222.0" fill="white"/>
+<text x="25.0" y="7" font-size="4">X Bottom Roller — -Z面(下)から貫通側から見た図  外形 100 x 150 mm</text>
+<text x="25.0" y="12" font-size="3" fill="#555">縮尺 1:1 (100%で印刷して型紙に使用 / 基準辺を材料の端に合わせる)</text>
+<rect x="25.00" y="39.00" width="100.00" height="150.00" fill="none" stroke="black" stroke-width="0.3"/>
+<text x="25.0" y="194.0" font-size="3">原点 (Y→, X↑)</text>
+<circle cx="44.00" cy="174.00" r="3.30" fill="none" stroke="red" stroke-width="0.25"/>
+<path d="M42.00,174.00H46.00M44.00,172.00V176.00" stroke="red" stroke-width="0.15"/>
+<text x="48.10" y="173.20" font-size="2.2">Φ6.6 (19, 15)</text>
+<circle cx="97.00" cy="174.00" r="3.30" fill="none" stroke="red" stroke-width="0.25"/>
+<path d="M95.00,174.00H99.00M97.00,172.00V176.00" stroke="red" stroke-width="0.15"/>
+<text x="101.10" y="173.20" font-size="2.2">Φ6.6 (72, 15)</text>
+<circle cx="44.00" cy="134.00" r="3.30" fill="none" stroke="red" stroke-width="0.25"/>
+<path d="M42.00,134.00H46.00M44.00,132.00V136.00" stroke="red" stroke-width="0.15"/>
+<text x="48.10" y="133.20" font-size="2.2">Φ6.6 (19, 55)</text>
+<circle cx="97.00" cy="134.00" r="3.30" fill="none" stroke="red" stroke-width="0.25"/>
+<path d="M95.00,134.00H99.00M97.00,132.00V136.00" stroke="red" stroke-width="0.15"/>
+<text x="101.10" y="133.20" font-size="2.2">Φ6.6 (72, 55)</text>
+<circle cx="44.00" cy="94.00" r="3.30" fill="none" stroke="red" stroke-width="0.25"/>
+<path d="M42.00,94.00H46.00M44.00,92.00V96.00" stroke="red" stroke-width="0.15"/>
+<text x="48.10" y="93.20" font-size="2.2">Φ6.6 (19, 95)</text>
+<circle cx="97.00" cy="94.00" r="3.30" fill="none" stroke="red" stroke-width="0.25"/>
+<path d="M95.00,94.00H99.00M97.00,92.00V96.00" stroke="red" stroke-width="0.15"/>
+<text x="101.10" y="93.20" font-size="2.2">Φ6.6 (72, 95)</text>
+<circle cx="44.00" cy="54.00" r="3.30" fill="none" stroke="red" stroke-width="0.25"/>
+<path d="M42.00,54.00H46.00M44.00,52.00V56.00" stroke="red" stroke-width="0.15"/>
+<text x="48.10" y="53.20" font-size="2.2">Φ6.6 (19, 135)</text>
+<circle cx="97.00" cy="54.00" r="3.30" fill="none" stroke="red" stroke-width="0.25"/>
+<path d="M95.00,54.00H99.00M97.00,52.00V56.00" stroke="red" stroke-width="0.15"/>
+<text x="101.10" y="53.20" font-size="2.2">Φ6.6 (72, 135)</text>
+<path d="M25.0,217.0h100.00" stroke="black" stroke-width="0.5"/>
+<text x="25.0" y="215.5" font-size="2.5">100 mm</text>
+</svg>

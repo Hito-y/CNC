@@ -1,0 +1,21 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="370.0mm" height="109.5mm" viewBox="0 0 370.0 109.5" font-family="Noto Sans CJK JP, IPAGothic, Hiragino Sans, Yu Gothic, Meiryo, sans-serif">
+<rect x="0" y="0" width="370.0" height="109.5" fill="white"/>
+<text x="25.0" y="7" font-size="4">X Gantry Tube — -Y面(手前)側から見た図  外形 640 x 75 mm</text>
+<text x="25.0" y="12" font-size="3" fill="#555">縮尺 1:2 (型紙ではない。寸法は穴位置表 CSV を使用)</text>
+<rect x="25.00" y="39.00" width="320.00" height="37.50" fill="none" stroke="black" stroke-width="0.3"/>
+<text x="25.0" y="81.5" font-size="3">原点 (X→, Z↑)</text>
+<circle cx="33.75" cy="57.75" r="2.75" fill="none" stroke="red" stroke-width="0.25"/>
+<path d="M31.75,57.75H35.75M33.75,55.75V59.75" stroke="red" stroke-width="0.15"/>
+<text x="37.30" y="56.95" font-size="1.8">Φ11 (17.5, 37.5)</text>
+<circle cx="53.75" cy="57.75" r="2.75" fill="none" stroke="red" stroke-width="0.25"/>
+<path d="M51.75,57.75H55.75M53.75,55.75V59.75" stroke="red" stroke-width="0.15"/>
+<text x="57.30" y="56.95" font-size="1.8">Φ11 (57.5, 37.5)</text>
+<circle cx="316.25" cy="57.75" r="2.75" fill="none" stroke="red" stroke-width="0.25"/>
+<path d="M314.25,57.75H318.25M316.25,55.75V59.75" stroke="red" stroke-width="0.15"/>
+<text x="319.80" y="56.95" font-size="1.8">Φ11 (582.5, 37.5)</text>
+<circle cx="336.25" cy="57.75" r="2.75" fill="none" stroke="red" stroke-width="0.25"/>
+<path d="M334.25,57.75H338.25M336.25,55.75V59.75" stroke="red" stroke-width="0.15"/>
+<text x="339.80" y="56.95" font-size="1.8">Φ11 (622.5, 37.5)</text>
+<path d="M25.0,104.5h50.00" stroke="black" stroke-width="0.5"/>
+<text x="25.0" y="103.0" font-size="2.5">100 mm</text>
+</svg>

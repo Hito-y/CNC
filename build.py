@@ -47,7 +47,10 @@ def main():
         export.render_png(parts, out / "preview.png")
         export.render_png(parts, out / "preview_iso.png", views=[("", 22, -58)], size=(12, 9))
     print(f"出力: {out.resolve()}  ({time.time() - t0:.1f}s)")
-    print(f"  フレーム外形 {L.y_span + p.tube_w:.0f} x {L.y_frame_len:.0f} mm, ガントリー上面 {L.z_gt:.0f} mm")
+    for w in L.warnings:
+        print("警告:", w)
+    for k, v in L.summary[:9]:
+        print(f"  {k}: {v}")
 
 
 if __name__ == "__main__":

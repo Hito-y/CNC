@@ -1,0 +1,21 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="357.5mm" height="109.5mm" viewBox="0 0 357.5 109.5" font-family="Noto Sans CJK JP, IPAGothic, Hiragino Sans, Yu Gothic, Meiryo, sans-serif">
+<rect x="0" y="0" width="357.5" height="109.5" fill="white"/>
+<text x="25.0" y="7" font-size="4">X Frame Tube 2 — +Z面(上)側から見た図  外形 615 x 75 mm</text>
+<text x="25.0" y="12" font-size="3" fill="#555">縮尺 1:2 (型紙ではない。寸法は穴位置表 CSV を使用)</text>
+<rect x="25.00" y="39.00" width="307.50" height="37.50" fill="none" stroke="black" stroke-width="0.3"/>
+<text x="25.0" y="81.5" font-size="3">原点 (X→, Y↑)</text>
+<circle cx="37.50" cy="67.75" r="2.25" fill="none" stroke="red" stroke-width="0.25"/>
+<path d="M35.50,67.75H39.50M37.50,65.75V69.75" stroke="red" stroke-width="0.15"/>
+<text x="40.55" y="66.95" font-size="1.8">Φ9 (25, 17.5)</text>
+<circle cx="320.00" cy="67.75" r="2.25" fill="none" stroke="red" stroke-width="0.25"/>
+<path d="M318.00,67.75H322.00M320.00,65.75V69.75" stroke="red" stroke-width="0.15"/>
+<text x="323.05" y="66.95" font-size="1.8">Φ9 (590, 17.5)</text>
+<circle cx="37.50" cy="47.75" r="2.25" fill="none" stroke="red" stroke-width="0.25"/>
+<path d="M35.50,47.75H39.50M37.50,45.75V49.75" stroke="red" stroke-width="0.15"/>
+<text x="40.55" y="46.95" font-size="1.8">Φ9 (25, 57.5)</text>
+<circle cx="320.00" cy="47.75" r="2.25" fill="none" stroke="red" stroke-width="0.25"/>
+<path d="M318.00,47.75H322.00M320.00,45.75V49.75" stroke="red" stroke-width="0.15"/>
+<text x="323.05" y="46.95" font-size="1.8">Φ9 (590, 57.5)</text>
+<path d="M25.0,104.5h50.00" stroke="black" stroke-width="0.5"/>
+<text x="25.0" y="103.0" font-size="2.5">100 mm</text>
+</svg>

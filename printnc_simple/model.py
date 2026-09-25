@@ -1,10 +1,20 @@
-"""PrintNC V4 ベース簡易フレームの形状生成。
+"""PrintNC V4 ベース簡易フレームの形状生成 (V4 ユーザーパラメータ準拠版)。
 
-V4 からの主な変更 (3Dプリンター不要化):
-  * 印刷/切削部品 (ボールねじナットマウント等) → 市販の山形鋼・平鋼を切って穴あけ
-  * 印刷ドリルガイド・組立治具 → 本スクリプトが出力する穴位置表と 1:1 型紙 (SVG)
-  * ガントリー/ベースは溶接せず M6 全ネジで締結 (V4 BOM の threaded rod 構成に準拠)
-  * Z軸は HGR15 ×2 本 (2Z 構成) を 12mm アルミ板に取付け、レール可動・キャリッジ固定
+V4 パラメータから読み取った構成:
+  * Xフレーム (75x50 を寝かせる) が足になり、その上に Yフレーム (75x50 を立てる) を載せる
+  * Yローラー (幅 75) の上にガントリー (75x75x4) を直接載せ、25mm 後ろへずらす。
+    前側の空いた部分にガントリーブレース (75x50x6) を置いて留める
+  * Xレールはガントリーの上面と下面の 2 本。上側は角パイプのトップローラー、
+    下側はアルミ山形のボトムローラーで受け、両者の前面にローラープレートを付ける
+  * Zは HGR15 x2 / HGH15CA x2 (2Z)
+
+3Dプリント不要化:
+  * ローラープレートは 12mm アルミ (V4 でも切削版の指定)
+  * ナットマウントは山形鋼、ドリルガイドは穴位置表と 1:1 型紙で代替
+
+V4 パラメータに現れず推定で置いた部分 (仮置き):
+  * Yボールねじ: Yフレームの外側 (Yローラー外側面からブラケットで駆動)
+  * Xボールねじ: ガントリーの後ろ (トップローラー背面からブラケットで駆動)
 """
 import math
 from types import SimpleNamespace
@@ -21,15 +31,20 @@ MOUNT = (0.40, 0.40, 0.44)
 SCREW = (0.86, 0.74, 0.36)
 WOOD = (0.82, 0.68, 0.45)
 SPINDLE = (0.93, 0.93, 0.93)
+TENTATIVE = (0.80, 0.35, 0.25)   # 仮置き部品の色
 
-SFU1610_BORE = 29.0   # ナット胴 Φ28 + 逃げ
+SFU1610_BORE = 29.0
 SFU1610_FLANGE = 48.0
 SFU1610_PCD = 38.0
 TAP_M5 = 4.2
-CLR_M6 = 6.6
-CLR_M5 = 5.5
+TAP_M6 = 5.0
 CLR_M4 = 4.5
-ROD_M6 = 7.0
+CLR_M5 = 5.5
+CLR_M6 = 6.6
+CLR_M8 = 9.0
+CSK_M6 = 12.0
+RIVNUT_M8 = 11.0
+ROLLER_HEIGHTS = (50.0, 75.0, 100.0, 125.0, 150.0)
 
 
 def ceil5(v):
@@ -37,85 +52,109 @@ def ceil5(v):
 
 
 def compute_layout(p):
-    """パラメータから主要寸法と可動部の位置を決める。"""
-    L = SimpleNamespace()
+    if p.x_car_count != 2 or p.y_car_count != 2:
+        raise ValueError("キャリッジ数は V4 既定の 2 (1本のレールに2個) のみ対応")
+    L = SimpleNamespace(warnings=[])
     Th, Tw = p.tube_h, p.tube_w
-    ya, yb, yt = p.y_angle
+    L.RW = max(Th, Tw)                                    # Yローラー幅 [V4: YRollerWidth]
+    L.yr_len = 50.0 + 50.0 * p.y_car_count                # [V4: YRollerLength]
+    L.xr_len = 50.0 + 50.0 * p.x_car_count                # [V4: XRollerLength]
+    L.y_group = (p.y_car_count - 1) * p.car_pitch + p.c20_l
+    L.x_group = (p.x_car_count - 1) * p.car_pitch + p.c20_l
     L.nut_r = SFU1610_FLANGE / 2
 
-    # --- 高さ方向 (z=0 は床) ---
-    L.z_ft = Th                                 # フレーム上面 (Yレール取付面)
-    L.z_ycar = L.z_ft + p.c20_h                 # Yキャリッジ上面
-    L.z_rt = L.z_ycar + Tw                      # Yローラー上面 (75幅を下向き)
-    L.wb_top = L.z_ft + p.wasteboard_t
-    L.z_gb = max(L.wb_top + p.cut_z + p.gantry_clear, L.z_rt)
-    L.upright_h = L.z_gb - L.z_rt
-    L.z_gt = L.z_gb + 2 * Th                    # ガントリー (2段重ね) 上面
-    L.ys_z = L.z_ft + p.spacer_t + 25.0         # Yねじ軸高さ (BK12 中心高 25)
-    L.xs_z = L.z_gt + p.spacer_t + 25.0         # Xねじ軸高さ
+    # ---------------- 高さ ----------------
+    L.z_yf0 = Tw                                          # Xフレーム上面 = Yフレーム下面
+    L.z_yf1 = Tw + Th                                     # Yレール取付面
+    L.z_ycar = L.z_yf1 + p.c20_h                          # Yローラー下面
+    L.wb_top = Tw + p.wasteboard_t
+    L.drop = p.c20_h + p.x_bottom_angle_t                 # ガントリー下面から下に出る量 (下レール+キャリッジ+山形)
+    need = L.wb_top + p.cut_z + p.work_clear + L.drop - L.z_ycar
+    if p.y_roller_h > 0:
+        L.RH = p.y_roller_h
+    else:
+        L.RH = next((h for h in ROLLER_HEIGHTS if h >= need), ROLLER_HEIGHTS[-1])
+    if L.RH < need:
+        L.warnings.append(f"Yローラー高さ {L.RH:g} ではワーク高さ {p.cut_z:g} が通らない (必要 {need:.0f})")
+    L.z_gb = L.z_ycar + L.RH                              # ガントリー下面
+    L.z_gt = L.z_gb + p.gantry_h
+    L.z_tr0 = L.z_gt + p.c20_h                            # トップローラー下面
+    L.z_tr1 = L.z_tr0 + p.x_top_roller_h
+    L.zb0 = L.z_gb - L.drop                               # ボトムローラー(山形) 下面 = ガントリー周りの最下点
+    L.under = L.zb0 - L.wb_top                            # 捨て板上面からガントリー下までの高さ
+    L.ys_z = L.z_yf1 + 5.0                                # Yねじ軸高さ
+    L.xs_z = L.z_gb + p.gantry_h / 2                      # Xねじ軸高さ
 
-    # --- Yねじ位置: Yチューブ中心から内側へのオフセット ---
-    L.ys_off = Th / 2 + p.brace_t + yt + 30.0
-
-    # --- Z軸 ---
+    # ---------------- Z ----------------
     L.tip_min = L.wb_top - p.z_margin_low
     L.tip_max = L.wb_top + p.cut_z + p.z_margin_high
     L.z_travel = L.tip_max - L.tip_min
-    L.zpb_min = L.tip_min + p.spindle_below + p.tool_stickout   # Zプレート下端 (最下点)
+    L.zpb_min = L.tip_min + p.spindle_below + p.tool_stickout
     L.zpb_max = L.zpb_min + L.z_travel
-    L.z_row1 = L.zpb_max + 10.0 + p.c15_l / 2                   # Zキャリッジ下段中心
+    L.z_row1 = max(L.zpb_max + 10.0 + p.c15_l / 2, L.zb0 + p.c15_l / 2 + 5.0)
     L.z_row2 = L.z_row1 + p.z_car_pitch
     L.z_nut = (L.z_row1 + L.z_row2) / 2
-    L.xa_h = max(60.0, 2 * (L.nut_r + 6.0))                     # Xナットアングル長さ
-    L.xa_z0 = L.z_gt + 5.0
-    L.brace_in_top = L.z_gb - 5.0                               # 内側ブレース上端 (Xプレートの逃げ)
-    L.xplate_z0 = min(L.z_gb + Th / 2 - p.c20_b / 2 - 12.0, L.z_gb + 3.0)   # 下段Xキャリッジ穴の縁距離 12
-    assert L.xplate_z0 > L.brace_in_top + 2.0, "Xプレート下端が内側ブレースに当たる"
-    L.xplate_z1 = L.xplate_z0 + ceil5(max(L.xa_z0 + L.xa_h, L.z_row2 + p.c15_l / 2 + 5.0) - L.xplate_z0)
-    L.zplate_h = ceil5(L.xplate_z1 + 5.0 - L.zpb_min)
-    L.zplate_w = ceil5(2 * (p.z_car_x + p.c15_w / 2) + 10.0)
-    L.xplate_w = ceil5(max(p.x_car_pitch + p.c20_l + 20.0, L.zplate_w))
+    L.rp_top = L.zb0 + ceil5(max(L.z_tr1, L.z_row2 + p.c15_l / 2 + 5.0) - L.zb0)
+    L.zplate_h = ceil5(L.rp_top + 5.0 - L.zpb_min)
+    L.zplate_w = ceil5(max(2 * (p.z_car_x + p.c15_w / 2) + 10.0, p.clamp_hole_h + 2 * 9.0))
 
-    # --- X方向 ---
-    L.x_rail_len = ceil5(p.cut_x + p.x_car_pitch + p.c20_l + 2 * p.r20_e)
-    wb_side = max(L.ys_off + L.nut_r, Th / 2 + p.brace_t + ya) + 6.0
-    span_wb = p.cut_x + 20.0 + 2 * wb_side                      # 捨て板が加工範囲を覆う
-    span_z = p.cut_x + L.zplate_w + 20.0 + Th + 2 * p.brace_t   # Zプレートが内側ブレースに当たらない
-    span_rail = L.x_rail_len - Th
-    L.y_span = ceil5(max(span_wb, span_z, span_rail))           # 左右Yチューブ中心間
-    L.gantry_len = L.y_span + Th
-    L.x_frame_len = L.y_span - Tw
-    L.wb_half_x = L.y_span / 2 - wb_side
+    # ---------------- X ----------------
+    L.x_rail_len = ceil5(p.cut_x + L.x_group + 5.0)
+    L.span = L.x_rail_len + L.RW + p.x_gap_left + p.x_gap_right   # 左右Yフレーム中心間
+    L.gantry_len = L.span + L.RW                           # [V4: XGantryLength]
+    L.x_frame_len = L.span + Tw
+    L.x_rail0 = -L.span / 2 + L.RW / 2 + p.x_gap_left
+    L.x_rail1 = L.x_rail0 + L.x_rail_len
+    L.x_mid = (L.x_rail0 + L.x_rail1) / 2
+    L.xp = L.x_mid - p.cut_x / 2 + p.pos_x * p.cut_x
 
-    # --- 前後方向 ---
-    L.y_rail_len = ceil5(p.cut_y + p.y_car_pitch + p.c20_l + 2 * p.r20_e)
-    L.gy = -p.cut_y / 2 + p.pos_y * p.cut_y                     # ガントリー中心 y
-    L.xp = -p.cut_x / 2 + p.pos_x * p.cut_x                     # Xキャリッジ群中心 x
-    L.zpb = L.zpb_min + p.pos_z * L.z_travel
-    L.y_gf = L.gy - Tw / 2                                      # ガントリー前面
-    L.y_xpb = L.y_gf - p.c20_h                                  # Xプレート背面
-    L.y_xpf = L.y_xpb - p.plate_t                               # Xプレート前面
+    # ---------------- Y ----------------
+    L.y_rail_len = ceil5(p.cut_y + L.y_group + 2 * p.r20_e)
+    L.yr = -p.cut_y / 2 + p.pos_y * p.cut_y                # Yローラー中心
+    L.g0 = L.yr - p.gantry_w / 2 + p.gantry_offset         # ガントリー前面
+    L.g1 = L.g0 + p.gantry_w
+    L.gy = (L.g0 + L.g1) / 2
+    L.y_rpb = L.g0 - p.x_shim_t                            # ローラープレート背面
+    L.y_xpf = L.y_rpb - p.roller_plate_t                   # ローラープレート前面
     L.z_gap = p.c15_h + p.z_spacer_t
-    L.y_zpb = L.y_xpf - L.z_gap                                 # Zプレート背面
+    L.y_zpb = L.y_xpf - L.z_gap
     L.y_zpf = L.y_zpb - p.plate_t
-    L.zs_y = L.y_xpf - L.z_gap / 2                              # Zねじ軸 y
-    L.sp_y_off = (L.y_zpf - 10.0 - p.spindle_d / 2) - L.gy      # 主軸のガントリー中心からの y オフセット
-    L.tool_y = (-p.cut_y / 2 + L.sp_y_off, p.cut_y / 2 + L.sp_y_off)
+    L.zs_y = L.y_xpf - L.z_gap / 2
+    L.sp_y = L.y_zpf - 10.0 - p.spindle_d / 2
+    L.sp_off = L.sp_y - L.yr
+    L.tool_y = (-p.cut_y / 2 + L.sp_off, p.cut_y / 2 + L.sp_off)
     L.wb_y = (L.tool_y[0] - 10.0, L.tool_y[1] + 10.0)
-    # 端の横桁とその上の BK/BF/HM がスピンドル (半径分) に当たらない位置まで延ばす
-    reach = p.spindle_d / 2 + 5.0
-    L.yf0 = min(-L.y_rail_len / 2 - Tw, L.wb_y[0] - Tw, L.tool_y[0] - reach - Tw)
-    L.yf1 = max(L.y_rail_len / 2 + Tw, L.wb_y[1] + Tw, L.tool_y[1] + reach + Tw)
+    L.yf0 = min(-L.y_rail_len / 2 - 70.0, L.wb_y[0] - 10.0)
+    L.yf1 = max(L.y_rail_len / 2 + 70.0, L.wb_y[1] + 10.0)
     L.y_frame_len = L.yf1 - L.yf0
+    L.wb_half_x = L.span / 2 - Tw / 2 - 2.0
+    L.xs_y = L.g1 + 3.0 + 10.0 + 30.0                      # Xねじ軸 (仮置き)
+    L.ys_off = L.RW / 2 + 6.0 + 30.0                       # Yねじ: Yフレーム中心から外側 (仮置き)
+    L.width = L.span + 2 * (L.ys_off + L.nut_r + 20.0)
+
+    L.summary = [
+        ("加工範囲 X × Y × Z", f"{p.cut_x:g} × {p.cut_y:g} × {p.cut_z:g}"),
+        ("フレーム外形 X × Y (Yねじ・モーター除く)", f"{L.x_frame_len:g} × {L.y_frame_len:g}"),
+        ("全幅 (Yねじ含む, 目安)", f"{L.width:.0f}"),
+        ("ガントリー上面 / トップローラー上面の高さ", f"{L.z_gt:g} / {L.z_tr1:g}"),
+        ("左右Yフレーム中心間", f"{L.span:g}"),
+        ("ガントリー (75x75x4) 長さ", f"{L.gantry_len:g}"),
+        ("X / Y レール長", f"{L.x_rail_len:g} / {L.y_rail_len:g}"),
+        ("Yローラー高さ (自動選択)", f"{L.RH:g}"),
+        ("捨て板上面からガントリー下 (最下点) まで", f"{L.under:g}"),
+        ("Zストローク", f"{L.z_travel:g}"),
+        ("工具先端の到達範囲 (捨て板上面基準)", f"{L.tip_min - L.wb_top:g} 〜 {L.tip_max - L.wb_top:g}"),
+        ("主軸の Yローラー中心からの前方オフセット", f"{-L.sp_off:g}"),
+        ("捨て板 X × Y", f"{2 * L.wb_half_x:g} × {L.wb_y[1] - L.wb_y[0]:g}"),
+    ]
     return L
 
 
 def build(p):
-    """部品リストと Layout を返す。"""
     L = compute_layout(p)
     parts = []
     Th, Tw, t = p.tube_h, p.tube_w, p.tube_t
-    tube_stock = f"角パイプ {Th:g}x{Tw:g}x{t:g}"
+    frame_stock = f"角パイプ {Th:g}x{Tw:g}x{t:g}"
 
     def add(part):
         parts.append(part)
@@ -125,241 +164,259 @@ def build(p):
         n = int((length - 2 * e) // pitch) + 1
         return [e + k * pitch for k in range(n)]
 
-    # ============================ ベースフレーム ============================
-    cross_y = [L.yf0 + Tw / 2, L.yf1 - Tw / 2]
+    def car_offsets(n):
+        return [(k - (n - 1) / 2) * p.car_pitch for k in range(n)]
+
+    # ================= Xフレーム (足) =================
+    xf_y = [L.yf0 + p.x_frame_front_off + Th / 2, L.yf1 - p.x_frame_back_off - Th / 2]
     n_mid = max(0, p.n_x_frame - 2)
     for k in range(n_mid):
-        cross_y.insert(-1, L.yf0 + Tw / 2 + (k + 1) * (L.y_frame_len - Tw) / (n_mid + 1))
+        xf_y.insert(-1, xf_y[0] + (k + 1) * (xf_y[-1] - xf_y[0]) / (n_mid + 1))
+    xframes = []
+    for i, cy in enumerate(xf_y):
+        bb = (-L.x_frame_len / 2, L.x_frame_len / 2, cy - Th / 2, cy + Th / 2, 0, Tw)
+        xframes.append(add(Part(f"X Frame Tube {i + 1}", "X Frame Tubing", "fabricated", frame_stock, bb,
+                                tube(bb, "x", t), STEEL, axis="x", wall=t,
+                                note="75面を下に寝かせて足にする。Yフレームを上に載せて M8 で縦に締結")))
 
+    # ================= Yフレーム / Yレール / Yローラー =================
+    rollers = {}
     for s, tag in ((-1, "L"), (1, "R")):
-        xc = s * L.y_span / 2
-        bb = (xc - Tw / 2, xc + Tw / 2, L.yf0, L.yf1, 0, Th)
-        yt_ = add(Part(f"Y Frame Tube {tag}", "Y Frame Tubing", "fabricated", tube_stock, bb,
-                       tube(bb, "y", t), STEEL, axis="y", wall=t))
+        xc = s * L.span / 2
+        bb = (xc - Tw / 2, xc + Tw / 2, L.yf0, L.yf1, L.z_yf0, L.z_yf1)
+        yt = add(Part(f"Y Frame Tube {tag}", "Y Frame Tubing", "fabricated", frame_stock, bb,
+                      tube(bb, "y", t), STEEL, axis="y", wall=t))
         for yy in rail_positions(L.y_rail_len, p.r20_e, p.r20_pitch):
-            yt_.add_hole("z", 1, (xc, -L.y_rail_len / 2 + yy, 0), TAP_M5, False, "Yレール M5タップ")
-        for cy in cross_y:
-            for dz in (-18, 18):
-                yt_.add_hole("x", 1, (0, cy, Th / 2 + dz), ROD_M6, True, "横桁締結 M6全ネジ")
-        # Yレール / キャリッジ
-        add(Part(f"Y Rail {tag}", "HGR20 Rail (Y)", "purchased", f"HGR20 L={L.y_rail_len:g}",
-                 (xc - p.r20_w / 2, xc + p.r20_w / 2, -L.y_rail_len / 2, L.y_rail_len / 2, Th, Th + p.r20_h),
-                 box(xc - p.r20_w / 2, xc + p.r20_w / 2, -L.y_rail_len / 2, L.y_rail_len / 2, Th, Th + p.r20_h),
-                 RAIL, axis="y"))
-        for dy in (-p.y_car_pitch / 2, p.y_car_pitch / 2):
-            cy = L.gy + dy
-            bb = (xc - p.c20_w / 2, xc + p.c20_w / 2, cy - p.c20_l / 2, cy + p.c20_l / 2, Th + 4.6, L.z_ycar)
-            add(Part(f"Y Carriage {tag}", "HGW20CC Carriage", "purchased", "HGW20CC", bb, box(*bb), CAR))
+            yt.add_hole("z", 1, (xc, -L.y_rail_len / 2 + yy, 0), TAP_M5, False, "Yレール M5タップ")
+        for xf, cy in zip(xframes, xf_y):
+            for dy in (-20, 20):
+                pt = (xc, cy + dy, 0)
+                yt.add_hole("z", -1, pt, RIVNUT_M8, False, "Y-Xフレーム M8 リベットナット")
+                xf.add_hole("z", 1, pt, CLR_M8, False, "Y-Xフレーム M8 (下から締める)")
+                xf.add_hole("z", -1, pt, 16.0, False, "工具挿入穴 (M8用)")
+        rb = (xc - p.r20_w / 2, xc + p.r20_w / 2, -L.y_rail_len / 2, L.y_rail_len / 2, L.z_yf1, L.z_yf1 + p.r20_h)
+        add(Part(f"Y Rail {tag}", "HGR20 Rail (Y)", "purchased", f"HGR20 L={L.y_rail_len:g}", rb, box(*rb), RAIL, axis="y"))
 
-    for i, cy in enumerate(cross_y):
-        bb = (-L.x_frame_len / 2, L.x_frame_len / 2, cy - Tw / 2, cy + Tw / 2, 0, Th)
-        add(Part(f"X Frame Tube {i + 1}", "X Frame Tubing", "fabricated", tube_stock, bb,
-                 tube(bb, "x", t), STEEL, axis="x", wall=t,
-                 note="Yチューブ間に突合せ、内部に M6 全ネジ 2本を通して締結"))
-        for dz in (-18, 18):
-            add(Part("Base Tie Rod", "M6 Threaded Rod (X base)", "purchased",
-                     f"M6 全ネジ L={L.y_span + Tw + 30:g}", (0,) * 6,
-                     cyl("x", (0, cy, Th / 2 + dz), 6.0, -(L.y_span + Tw) / 2 - 15, (L.y_span + Tw) / 2 + 15),
-                     SCREW, axis="x"))
-    # 捨て板
-    bb = (-L.wb_half_x, L.wb_half_x, L.wb_y[0], L.wb_y[1], Th, L.wb_top)
-    add(Part("Wasteboard", "Wasteboard", "purchased", f"合板/MDF t={p.wasteboard_t:g}", bb, box(*bb), WOOD))
-
-    # ============================ Y ローラー / 支柱 / ブレース ============================
-    ya, yb, yt = p.y_angle
-    z_rb = L.z_ycar + Tw / 2   # ローラー締結ボルト高さ
-    for s, tag in ((-1, "L"), (1, "R")):
-        xc = s * L.y_span / 2
-        x_in = xc - s * Th / 2     # 内側面
-        x_out = xc + s * Th / 2    # 外側面
-        # Yローラー (75 面を下にして Y キャリッジ 2 個に載せる)
-        bb = (xc - Th / 2, xc + Th / 2, L.gy - p.y_roller_len / 2, L.gy + p.y_roller_len / 2, L.z_ycar, L.z_rt)
-        roller = add(Part(f"Y Roller {tag}", "Y Roller Tubing", "fabricated", tube_stock, bb,
-                          tube(bb, "y", t), STEEL, axis="y", wall=t))
-        for dy in (-p.y_car_pitch / 2, p.y_car_pitch / 2):
+        # Yローラー
+        bb = (xc - L.RW / 2, xc + L.RW / 2, L.yr - L.yr_len / 2, L.yr + L.yr_len / 2, L.z_ycar, L.z_gb)
+        rstock = f"角パイプ {max(L.RH, L.RW):g}x{min(L.RH, L.RW):g}x{p.roller_t:g}"
+        roller = add(Part(f"Y Roller {tag}", "Y Roller Tubing", "fabricated", rstock, bb,
+                          tube(bb, "y", p.roller_t), STEEL, axis="y", wall=p.roller_t,
+                          note=f"幅 {L.RW:g} を横、高さ {L.RH:g}。先にキャリッジを留めてからガントリーを載せる"))
+        rollers[s] = roller
+        for dy in car_offsets(p.y_car_count):
+            cy = L.yr + dy
+            cb = (xc - p.c20_w / 2, xc + p.c20_w / 2, cy - p.c20_l / 2, cy + p.c20_l / 2, L.z_yf1 + 4.6, L.z_ycar)
+            add(Part(f"Y Carriage {tag}", "HGW20CC Carriage", "purchased", "HGW20CC", cb, box(*cb), CAR))
             for bx in (-p.c20_b / 2, p.c20_b / 2):
                 for by in (-p.c20_c / 2, p.c20_c / 2):
-                    pt = (xc + bx, L.gy + dy + by, 0)
+                    pt = (xc + bx, cy + by, 0)
                     roller.add_hole("z", -1, pt, CLR_M6, False, "Yキャリッジ M6")
                     roller.add_hole("z", 1, pt, 12.0, False, "工具挿入穴 (M6頭用)")
-        # 支柱
-        upright = None
-        if L.upright_h > 1:
-            bb = (xc - Th / 2, xc + Th / 2, L.gy - Tw / 2, L.gy + Tw / 2, L.z_rt, L.z_gb)
-            upright = add(Part(f"Upright {tag}", "Y Roller Tubing (upright)", "fabricated", tube_stock, bb,
-                               tube(bb, "z", t), STEEL, axis="z", wall=t,
-                               note="Yローラー上に立て、両側ブレースで挟んで締結"))
-        # ブレース (内側: ガントリー下面まで / 外側: ガントリー上面まで)
-        def brace_bb(side, z1):
-            if side == "in":
-                xa, xb_ = (x_in - s * p.brace_t, x_in)
-            else:
-                xa, xb_ = (x_out, x_out + s * p.brace_t)
-            return (min(xa, xb_), max(xa, xb_), L.gy - p.y_roller_len / 2, L.gy + p.y_roller_len / 2, L.z_ycar, z1)
-        bb_in = brace_bb("in", L.brace_in_top)
-        bb_out = brace_bb("out", L.z_gt)
-        brace_in = add(Part(f"Y Roller Brace Inner {tag}", "Y Roller Brace (inner)", "fabricated",
-                            f"平板 t={p.brace_t:g} (鋼/アルミ)", bb_in, box(*bb_in), FLAT))
-        brace_out = add(Part(f"Y Roller Brace Outer {tag}", "Y Roller Brace (outer)", "fabricated",
-                             f"平板 t={p.brace_t:g} (鋼/アルミ)", bb_out, box(*bb_out), FLAT))
-        for dy in (-100.0, -20.0, 20.0, 100.0):
-            for q in (roller, brace_in, brace_out):
-                q.add_hole("x", s, (0, L.gy + dy, z_rb), CLR_M6, True, "ローラー貫通ボルト M6")
-        if upright is not None:
-            uh = L.brace_in_top - L.z_rt
-            zs = [L.z_rt + uh / 3, L.z_rt + 2 * uh / 3] if uh >= 60 else [L.z_rt + uh / 2]
-            for zz in zs:
-                for q in (upright, brace_in, brace_out):
-                    q.add_hole("x", s, (0, L.gy, zz), CLR_M6, True, "支柱貫通ボルト M6")
-        for k in range(2):
-            zc = L.z_gb + Th / 2 + k * Th
-            for dz in (-18, 18):
-                brace_out.add_hole("x", s, (0, L.gy, zc + dz), ROD_M6, True, "ガントリー締結 M6全ネジ")
 
-        # Yナットブラケット (山形鋼): 脚B を内側ブレースにボルト留め、脚A にナット
-        xb0 = x_in - s * p.brace_t                  # 内側ブレースの内面
-        xa1 = xb0 - s * ya
-        bb = (min(xb0, xa1), max(xb0, xa1), L.gy - yb / 2, L.gy + yb / 2, L.ys_z - 30.0, L.z_rt)
-        face_b = "-x" if s < 0 else "+x"
-        ang = add(Part(f"Y Nut Bracket {tag}", "Y Nut Bracket (angle)", "fabricated",
-                       f"山形鋼 L{ya:g}x{yb:g}x{yt:g}", bb, slabs(bb, ["-y", face_b], yt), STEEL, axis="z",
-                       note="V4 の印刷ナットマウントの代替"))
-        ysx = xc - s * L.ys_off
+    # ================= ガントリー =================
+    gb = (-L.gantry_len / 2, L.gantry_len / 2, L.g0, L.g1, L.z_gb, L.z_gt)
+    gantry = add(Part("X Gantry Tube", "X Gantry Tubing", "fabricated",
+                      f"角パイプ {p.gantry_h:g}x{p.gantry_w:g}x{p.gantry_t:g}", gb,
+                      tube(gb, "x", p.gantry_t), STEEL, axis="x", wall=p.gantry_t,
+                      note=f"Yローラーに直接載せ、ローラー中心から {p.gantry_offset:g} 後ろへずらす"))
+    for xx in rail_positions(L.x_rail_len, p.r20_e, p.r20_pitch):
+        gantry.add_hole("z", 1, (L.x_rail0 + xx, L.gy, 0), TAP_M5, False, "上Xレール M5タップ")
+        gantry.add_hole("z", -1, (L.x_rail0 + xx, L.gy, 0), TAP_M5, False, "下Xレール M5タップ")
+    for k, (z0, z1) in enumerate(((L.z_gt, L.z_gt + p.r20_h), (L.z_gb - p.r20_h, L.z_gb))):
+        rb = (L.x_rail0, L.x_rail1, L.gy - p.r20_w / 2, L.gy + p.r20_w / 2, z0, z1)
+        add(Part(f"X Rail {'Top' if k == 0 else 'Bottom'}", "HGR20 Rail (X)", "purchased",
+                 f"HGR20 L={L.x_rail_len:g}", rb, box(*rb), RAIL, axis="x"))
+
+    for s, tag in ((-1, "L"), (1, "R")):
+        xc = s * L.span / 2
+        roller = rollers[s]
+        for dy in (-20, 20):
+            gantry.add_hole("z", 1, (xc, L.gy + dy, 0), CLR_M8, True, "ガントリー-Yローラー M8")
+            roller.add_hole("z", 1, (xc, L.gy + dy, 0), CLR_M8, False, "ガントリー-Yローラー M8 (ナットはローラー端から)")
+        # ガントリーブレース: ガントリー前の空いたローラー上面に置く
+        bb = (xc - L.RW / 2, xc + L.RW / 2, L.g0 - p.brace_w, L.g0, L.z_gb, L.z_gb + p.brace_h)
+        br = add(Part(f"Gantry Brace {tag}", "Gantry Brace", "fabricated",
+                      f"角パイプ {p.brace_h:g}x{p.brace_w:g}x{p.brace_t:g}", bb, tube(bb, "x", p.brace_t), STEEL,
+                      axis="x", wall=p.brace_t, note="ガントリー前面と Yローラー上面をつなぐ [V4: GantryBrace]"))
+        for dx in (-20, 20):
+            br.add_hole("y", -1, (xc + dx, 0, L.z_gb + p.brace_h / 2), CLR_M8, True, "ブレース-ガントリー M8")
+            gantry.add_hole("y", -1, (xc + dx, 0, L.z_gb + p.brace_h / 2), RIVNUT_M8, False, "ブレース M8 リベットナット")
+            br.add_hole("z", 1, (xc + dx, L.g0 - p.brace_w / 2, 0), CLR_M8, True, "ブレース-Yローラー M8")
+            roller.add_hole("z", 1, (xc + dx, L.g0 - p.brace_w / 2, 0), CLR_M8, False, "ブレース-Yローラー M8")
+
+    # ================= X キャリッジ / ローラー =================
+    xr0, xr1 = L.xp - L.xr_len / 2, L.xp + L.xr_len / 2
+    for dx in car_offsets(p.x_car_count):
+        cx = L.xp + dx
+        for z0, z1 in ((L.z_gt + 4.6, L.z_tr0), (L.z_gb - p.c20_h, L.z_gb - 4.6)):
+            cb = (cx - p.c20_l / 2, cx + p.c20_l / 2, L.gy - p.c20_w / 2, L.gy + p.c20_w / 2, z0, z1)
+            add(Part("X Carriage", "HGW20CC Carriage", "purchased", "HGW20CC", cb, box(*cb), CAR))
+
+    bb = (xr0, xr1, L.g0, L.g0 + max(Th, p.gantry_w), L.z_tr0, L.z_tr1)
+    top = add(Part("X Top Roller", "X Top Roller (X Roller Tubing)", "fabricated",
+                   f"角パイプ {max(Th, p.gantry_w):g}x{p.x_top_roller_h:g}x{p.roller_t:g}", bb,
+                   tube(bb, "x", p.roller_t), STEEL, axis="x", wall=p.roller_t, note="上Xキャリッジに載せる"))
+    bb = (xr0, xr1, L.y_rpb, L.g0, L.z_tr0, L.z_tr1)
+    shim = add(Part("X Roller Shim", "X Roller Shim", "fabricated", f"平鋼/アルミ t={p.x_shim_t:g}", bb, box(*bb), FLAT))
+    aw = max(75.0, 25.0 * math.ceil((max(Th, p.gantry_w) + p.x_shim_t - 6.0) / 25.0))
+    at = p.x_bottom_angle_t
+    bb = (xr0, xr1, L.y_rpb, L.y_rpb + aw, L.zb0, L.zb0 + p.x_bottom_angle_h)
+    bot = add(Part("X Bottom Roller", "X Bottom Roller (X Roller Angle)", "fabricated",
+                   f"アルミ山形 L{aw:g}x{p.x_bottom_angle_h:g}x{at:g}", bb, slabs(bb, ["-y", "-z"], at), ALU,
+                   axis="x", note="下Xキャリッジの下に付け、立ち上がりをローラープレートに留める"))
+    bb = (xr0, xr1, L.y_xpf, L.y_rpb, L.zb0, L.rp_top)
+    plate = add(Part("Roller Plate", "Roller Plate", "fabricated", f"アルミ板 t={p.roller_plate_t:g}", bb, box(*bb),
+                     ALU, note="V4 の RollerPlate (切削版 12mm)。3Dプリント版の代替"))
+    for dx in car_offsets(p.x_car_count):
+        for bx in (-p.c20_c / 2, p.c20_c / 2):
+            for by in (-p.c20_b / 2, p.c20_b / 2):
+                pt = (L.xp + dx + bx, L.gy + by, 0)
+                top.add_hole("z", -1, pt, CLR_M6, False, "上Xキャリッジ M6")
+                top.add_hole("z", 1, pt, 12.0, False, "工具挿入穴 (M6頭用)")
+                bot.add_hole("z", -1, pt, CLR_M6, True, "下Xキャリッジ M6 (下から)")
+    z_top_bolt = L.z_tr0 + p.x_top_roller_h / 2
+    z_bot_bolt = L.zb0 + at + (p.x_bottom_angle_h - at) / 2
+    for dx in (-50.0, -15.0, 15.0, 50.0):
+        for q in (plate, shim, top):
+            q.add_hole("y", -1, (L.xp + dx, 0, z_top_bolt), CLR_M6, True, "プレート-トップローラー M6 皿",
+                       cbore=CSK_M6 if q is plate else 0.0)
+        plate.add_hole("y", -1, (L.xp + dx, 0, z_bot_bolt), CLR_M6, True, "プレート-ボトムローラー M6 皿", cbore=CSK_M6)
+        bot.add_hole("y", -1, (L.xp + dx, 0, z_bot_bolt), TAP_M6, True, "プレート-ボトムローラー M6タップ")
+
+    # ================= Xボールねじ (仮置き: ガントリー後ろ) =================
+    xa_b = L.xs_y + 30.0 - (L.g1 + 3.0)
+    bb = (L.xp - 5.0, L.xp + 70.0, L.g1 + 3.0, L.xs_y + 30.0, L.xs_z - 30.0, L.z_tr1)
+    xang = add(Part("X Nut Bracket", "X Nut Bracket (angle)", "fabricated", f"山形鋼 L75x{xa_b:g}x10 (仮置き)", bb,
+                    slabs(bb, ["-y", "-x"], 10.0), TENTATIVE, axis="z",
+                    note="トップローラー背面に 3mm スペーサーを挟んで共締め。Xねじ位置は V4 未確認"))
+    bb = (L.xp - 5.0, L.xp + 70.0, L.g1, L.g1 + 3.0, L.z_tr0, L.z_tr1)
+    xsp = add(Part("X Nut Spacer", "X Nut Spacer", "fabricated", "平鋼 t=3 (仮置き)", bb, box(*bb), TENTATIVE))
+    for dx in (15.0, 50.0):
+        for q in (xang, xsp):
+            q.add_hole("y", -1, (L.xp + dx, 0, z_top_bolt), CLR_M6, True, "プレート-トップローラー M6 皿")
+    xang.add_hole("x", -1, (0, L.xs_y, L.xs_z), SFU1610_BORE, True, "SFU1610 ナット胴")
+    for a in (45, 135, 225, 315):
+        r = SFU1610_PCD / 2
+        xang.add_hole("x", -1, (0, L.xs_y + r * math.cos(math.radians(a)), L.xs_z + r * math.sin(math.radians(a))),
+                      CLR_M5, True, "ナットフランジ M5 (現物合わせ)")
+    add(Part("X Nut", "SFU1610 Nut", "purchased", "SFU1610", (0,) * 6,
+             cyl("x", (0, L.xs_y, L.xs_z), SFU1610_FLANGE, L.xp + 5, L.xp + 15)
+             .fuse(cyl("x", (0, L.xs_y, L.xs_z), 28.0, L.xp - 37, L.xp + 5)), SCREW))
+    sp_t = L.xs_y - 25.0 - L.g1
+    x_m = L.gantry_len / 2 - 40.0
+    for xx, kind in ((x_m, "HM12-57"), (-x_m, "BF12")):
+        bb = (xx - 22.5, xx + 22.5, L.g1, L.g1 + sp_t, L.xs_z - 35, L.xs_z + 35)
+        sp = add(Part(f"X {kind} Spacer", "Mount Spacer Plate", "fabricated", f"平鋼 t={sp_t:g} (仮置き)", bb, box(*bb),
+                      TENTATIVE))
+        for dz in (-23, 23):
+            sp.add_hole("y", 1, (xx, 0, L.xs_z + dz), TAP_M5, True, f"{kind} 取付 M5タップ")
+        for dx in (-12, 12):
+            sp.add_hole("y", 1, (xx + dx, 0, L.xs_z), CLR_M5, True, "台座固定 M5 皿ボルト", cbore=10.5)
+            gantry.add_hole("y", 1, (xx + dx, 0, L.xs_z), TAP_M5, False, f"X {kind} 台座 M5タップ")
+        along = 45.0 if kind.startswith("HM") else 25.0
+        mb = (xx - along / 2, xx + along / 2, L.g1 + sp_t, L.xs_y + (30.0 if kind.startswith("HM") else 18.0),
+              L.xs_z - 30, L.xs_z + 30)
+        add(Part(kind, kind, "purchased", kind, mb, box(*mb), MOUNT))
+        if kind.startswith("HM"):
+            mb = (xx + along / 2, xx + along / 2 + 76, L.xs_y - 28.5, L.xs_y + 28.5, L.xs_z - 28.5, L.xs_z + 28.5)
+            add(Part("NEMA23 Motor X", "NEMA23 Motor", "purchased", "NEMA23 57x57x76", mb, box(*mb), MOTOR))
+    add(Part("X Ballscrew", "SFU1610 Ballscrew (X)", "purchased", f"SFU1610 L≈{2 * x_m + 60:g}", (0,) * 6,
+             cyl("x", (0, L.xs_y, L.xs_z), 16.0, -x_m - 30, x_m + 30), SCREW, axis="x"))
+
+    # ================= Yボールねじ (仮置き: Yフレーム外側) =================
+    for s, tag in ((-1, "L"), (1, "R")):
+        xc = s * L.span / 2
+        roller = rollers[s]
+        x_out = xc + s * L.RW / 2
+        ysx = xc + s * L.ys_off
+        xa = x_out + s * 65.0
+        bb = (min(x_out, xa), max(x_out, xa), L.yr - 40.0, L.yr + 40.0, L.ys_z - 30.0, L.z_gb)
+        face_b = "-x" if s > 0 else "+x"
+        ang = add(Part(f"Y Nut Bracket {tag}", "Y Nut Bracket (angle)", "fabricated", "山形鋼 L65x80x6 (仮置き)", bb,
+                       slabs(bb, ["-y", face_b], 6.0), TENTATIVE, axis="z",
+                       note="Yローラー外側面に共締め。Yねじ位置は V4 未確認"))
+        for dy in (-25.0, 25.0):
+            for q in (roller, ang):
+                q.add_hole("x", s, (0, L.yr + dy, L.z_ycar + L.RH / 2), CLR_M6, True, "Yナットブラケット M6 貫通")
         ang.add_hole("y", -1, (ysx, 0, L.ys_z), SFU1610_BORE, True, "SFU1610 ナット胴")
         for a in (45, 135, 225, 315):
             r = SFU1610_PCD / 2
             ang.add_hole("y", -1, (ysx + r * math.cos(math.radians(a)), 0, L.ys_z + r * math.sin(math.radians(a))),
                          CLR_M5, True, "ナットフランジ M5 (現物合わせ)")
-        for dy in (-20.0, 20.0):
-            ang.add_hole("x", s, (0, L.gy + dy, z_rb), CLR_M6, True, "ブレース経由でローラーに共締め")
-        # Yボールねじ・ナット・BK/BF/HM
-        y_bk = L.yf0 + Tw / 2
-        y_bf = L.yf1 - Tw / 2
-        add(Part(f"Y Ballscrew {tag}", "SFU1610 Ballscrew (Y)", "purchased",
-                 f"SFU1610 L≈{y_bf - y_bk + 60:g}", (0,) * 6,
-                 cyl("y", (ysx, 0, L.ys_z), 16.0, y_bk - 30, y_bf + 30), SCREW, axis="y"))
+        y_front = L.yr - 40.0
         add(Part(f"Y Nut {tag}", "SFU1610 Nut", "purchased", "SFU1610", (0,) * 6,
-                 cyl("y", (ysx, 0, L.ys_z), SFU1610_FLANGE, L.gy - yb / 2 - 10, L.gy - yb / 2)
-                 .fuse(cyl("y", (ysx, 0, L.ys_z), 28.0, L.gy - yb / 2, L.gy - yb / 2 + 32)), SCREW))
-        for (yy, kind) in ((y_bk, "HM12-57"), (y_bf, "BF12")):
-            cross = [q for q in parts if q.bom == "X Frame Tubing" and abs((q.bbox[2] + q.bbox[3]) / 2 - yy) < 1][0]
-            sp_bb = (ysx - 40, ysx + 40, yy - 22.5, yy + 22.5, Th, Th + p.spacer_t)
-            sp = add(Part(f"Y {kind} Spacer {tag}", "Mount Spacer Plate", "fabricated",
-                          f"平鋼 t={p.spacer_t:g}", sp_bb, box(*sp_bb), FLAT))
+                 cyl("y", (ysx, 0, L.ys_z), SFU1610_FLANGE, y_front - 10, y_front)
+                 .fuse(cyl("y", (ysx, 0, L.ys_z), 28.0, y_front, y_front + 38)), SCREW))
+        # 端のマウント用アングル
+        y_ends = (L.yf0 + 35.0, L.yf1 - 35.0)
+        for ye, kind in zip(y_ends, ("HM12-57", "BF12")):
+            xa2 = xc + s * (Tw / 2 + 100.0)
+            bb = (min(xc + s * Tw / 2, xa2), max(xc + s * Tw / 2, xa2), ye - 30, ye + 30, L.z_yf0, L.ys_z - 25.0)
+            face_v = "-x" if s > 0 else "+x"
+            ma = add(Part(f"Y {kind} Angle {tag}", "Y Mount Angle", "fabricated", "山形鋼 L100x65x10 (仮置き)", bb,
+                          slabs(bb, [face_v, "+z"], 10.0), TENTATIVE, axis="y",
+                          note="Yフレーム外側面に M8 で固定し、上に BK/BF/HM を載せる"))
+            yt = [q for q in parts if q.name == f"Y Frame Tube {tag}"][0]
+            for dy in (-15, 15):
+                for q in (ma, yt):
+                    q.add_hole("x", s, (0, ye + dy, L.z_yf0 + 25.0), CLR_M8, True, "Yマウント M8 貫通")
             for dx in (-23, 23):
-                sp.add_hole("z", 1, (ysx + dx, yy, 0), TAP_M5, True, f"{kind} 取付 M5タップ")
-            for dy in (-12, 12):
-                sp.add_hole("z", 1, (ysx, yy + dy, 0), CLR_M5, True, "台座固定 M5 皿ボルト", cbore=10.5)
-                cross.add_hole("z", 1, (ysx, yy + dy, 0), TAP_M5, False, f"Y {kind} 台座 M5タップ")
-            add_mount(add, kind, "y", (ysx, yy, L.ys_z), Th + p.spacer_t, outward=-1)
+                ma.add_hole("z", 1, (ysx + dx, ye, 0), TAP_M5, True, f"{kind} 取付 M5タップ")
+            along = 45.0 if kind.startswith("HM") else 25.0
+            top_z = L.ys_z + (30.0 if kind.startswith("HM") else 18.0)
+            yc_m = ye - 30.0 + along / 2 if kind.startswith("HM") else ye   # HM はモーターがアングルの外に出るよう前端に寄せる
+            mb = (ysx - 30, ysx + 30, yc_m - along / 2, yc_m + along / 2, L.ys_z - 25.0, top_z)
+            add(Part(kind, kind, "purchased", kind, mb, box(*mb), MOUNT))
+            if kind.startswith("HM"):
+                y0 = yc_m - along / 2
+                mb = (ysx - 28.5, ysx + 28.5, y0 - 76, y0, L.ys_z - 28.5, L.ys_z + 28.5)
+                add(Part(f"NEMA23 Motor Y{tag}", "NEMA23 Motor", "purchased", "NEMA23 57x57x76", mb, box(*mb), MOTOR))
+        add(Part(f"Y Ballscrew {tag}", "SFU1610 Ballscrew (Y)", "purchased",
+                 f"SFU1610 L≈{y_ends[1] - y_ends[0] + 60:g}", (0,) * 6,
+                 cyl("y", (ysx, 0, L.ys_z), 16.0, y_ends[0] - 30, y_ends[1] + 30), SCREW, axis="y"))
 
-    # ============================ ガントリー ============================
-    gantry = []
-    for k in range(2):
-        z0 = L.z_gb + k * Th
-        bb = (-L.gantry_len / 2, L.gantry_len / 2, L.gy - Tw / 2, L.gy + Tw / 2, z0, z0 + Th)
-        g = add(Part(f"X Gantry Tube {'Lower' if k == 0 else 'Upper'}", "X Gantry Tubing", "fabricated",
-                     tube_stock, bb, tube(bb, "x", t), STEEL, axis="x", wall=t,
-                     note="2段重ね。内部に M6 全ネジ 2本を通し両端の外側ブレースで締結"))
-        gantry.append(g)
-        zc = z0 + Th / 2
-        for xx in rail_positions(L.x_rail_len, p.r20_e, p.r20_pitch):
-            g.add_hole("y", -1, (-L.x_rail_len / 2 + xx, 0, zc), TAP_M5, False, "Xレール M5タップ")
-        add(Part(f"X Rail {k + 1}", "HGR20 Rail (X)", "purchased", f"HGR20 L={L.x_rail_len:g}",
-                 (-L.x_rail_len / 2, L.x_rail_len / 2, L.y_gf - p.r20_h, L.y_gf, zc - p.r20_w / 2, zc + p.r20_w / 2),
-                 box(-L.x_rail_len / 2, L.x_rail_len / 2, L.y_gf - p.r20_h, L.y_gf, zc - p.r20_w / 2, zc + p.r20_w / 2),
-                 RAIL, axis="x"))
-        for dz in (-18, 18):
-            add(Part("Gantry Tie Rod", "M6 Threaded Rod (X gantry)", "purchased",
-                     f"M6 全ネジ L={L.gantry_len + 2 * p.brace_t + 30:g}", (0,) * 6,
-                     cyl("x", (0, L.gy, zc + dz), 6.0, -L.gantry_len / 2 - p.brace_t - 15,
-                         L.gantry_len / 2 + p.brace_t + 15), SCREW, axis="x"))
-        for dx in (-p.x_car_pitch / 2, p.x_car_pitch / 2):
-            cx = L.xp + dx
-            bb = (cx - p.c20_l / 2, cx + p.c20_l / 2, L.y_xpb, L.y_gf - 4.6, zc - p.c20_w / 2, zc + p.c20_w / 2)
-            add(Part("X Carriage", "HGW20CC Carriage", "purchased", "HGW20CC", bb, box(*bb), CAR))
+    # ================= 捨て板 =================
+    bb = (-L.wb_half_x, L.wb_half_x, L.wb_y[0], L.wb_y[1], L.z_yf0, L.wb_top)
+    add(Part("Wasteboard", "Wasteboard", "purchased", f"合板/MDF t={p.wasteboard_t:g}", bb, box(*bb), WOOD))
 
-    # Xボールねじ (ガントリー上面)
-    x_hm = L.gantry_len / 2 - 40.0
-    for xx, kind in ((x_hm, "HM12-57"), (-x_hm, "BF12")):
-        sp_bb = (xx - 22.5, xx + 22.5, L.gy - 40, L.gy + 40, L.z_gt, L.z_gt + p.spacer_t)
-        sp = add(Part(f"X {kind} Spacer", "Mount Spacer Plate", "fabricated", f"平鋼 t={p.spacer_t:g}",
-                      sp_bb, box(*sp_bb), FLAT))
-        for dy in (-23, 23):
-            sp.add_hole("z", 1, (xx, L.gy + dy, 0), TAP_M5, True, f"{kind} 取付 M5タップ")
-        for dx in (-12, 12):
-            sp.add_hole("z", 1, (xx + dx, L.gy, 0), CLR_M5, True, "台座固定 M5 皿ボルト", cbore=10.5)
-            gantry[1].add_hole("z", 1, (xx + dx, L.gy, 0), TAP_M5, False, f"X {kind} 台座 M5タップ")
-        add_mount(add, kind, "x", (xx, L.gy, L.xs_z), L.z_gt + p.spacer_t, outward=1)
-    add(Part("X Ballscrew", "SFU1610 Ballscrew (X)", "purchased", f"SFU1610 L≈{2 * x_hm + 60:g}", (0,) * 6,
-             cyl("x", (0, L.gy, L.xs_z), 16.0, -x_hm - 30, x_hm + 30), SCREW, axis="x"))
-
-    # Xローラープレート (V4 の X Roller tubing/angle/shim をアルミ板 1 枚に置換)
-    bb = (L.xp - L.xplate_w / 2, L.xp + L.xplate_w / 2, L.y_xpf, L.y_xpb, L.xplate_z0, L.xplate_z1)
-    xplate = add(Part("X Roller Plate", "X Roller Plate", "fabricated", f"アルミ板 t={p.plate_t:g}",
-                      bb, box(*bb), ALU, note="V4 の X Roller tubing + angle + shim の代替"))
-    for k in range(2):
-        zc = L.z_gb + Th / 2 + k * Th
-        for dx in (-p.x_car_pitch / 2, p.x_car_pitch / 2):
-            for bx in (-p.c20_c / 2, p.c20_c / 2):
-                for bz in (-p.c20_b / 2, p.c20_b / 2):
-                    xplate.add_hole("y", -1, (L.xp + dx + bx, 0, zc + bz), CLR_M6, True,
-                                    "Xキャリッジ M6 (前面から座ぐりΦ11 深6.5)", cbore=11.0)
+    # ================= Z 軸 =================
     for zr in (L.z_row1, L.z_row2):
         for sx in (-1, 1):
             for bx in (-p.c15_b / 2, p.c15_b / 2):
                 for bz in (-p.c15_c / 2, p.c15_c / 2):
-                    xplate.add_hole("y", -1, (L.xp + sx * p.z_car_x + bx, 0, zr + bz), CLR_M4, True, "Zキャリッジ M4")
-            bb = (L.xp + sx * p.z_car_x - p.c15_w / 2, L.xp + sx * p.z_car_x + p.c15_w / 2,
+                    plate.add_hole("y", -1, (L.xp + sx * p.z_car_x + bx, 0, zr + bz), CLR_M4, True, "Zキャリッジ M4")
+            cb = (L.xp + sx * p.z_car_x - p.c15_w / 2, L.xp + sx * p.z_car_x + p.c15_w / 2,
                   L.y_xpf - (p.c15_h - 4.3), L.y_xpf, zr - p.c15_l / 2, zr + p.c15_l / 2)
-            add(Part("Z Carriage", "HGH15CA Carriage", "purchased", "HGH15CA", bb, box(*bb), CAR))
+            add(Part("Z Carriage", "HGH15CA Carriage", "purchased", "HGH15CA", cb, box(*cb), CAR))
     for dx in (-18, 18):
         for dz in (-12, 12):
-            xplate.add_hole("y", -1, (L.xp + dx, 0, L.z_nut + dz), CLR_M5, True, "Zナットブロック M5 (現物合わせ)")
+            plate.add_hole("y", -1, (L.xp + dx, 0, L.z_nut + dz), CLR_M5, True, "Zナットブロック M5 (現物合わせ)")
 
-    # Xナットブラケット (不等辺山形鋼): 脚A を X プレート背面、脚B にナット
-    xa, xb, xt = p.x_angle
-    bb = (L.xp - xt / 2, L.xp - xt / 2 + xb, L.y_xpb, L.y_xpb + xa, L.xa_z0, L.xa_z0 + L.xa_h)
-    xang = add(Part("X Nut Bracket", "X Nut Bracket (angle)", "fabricated", f"山形鋼 L{xa:g}x{xb:g}x{xt:g}",
-                    bb, slabs(bb, ["-y", "-x"], xt), STEEL, axis="z", note="V4 の印刷ナットマウントの代替"))
-    xang.add_hole("x", -1, (0, L.gy, L.xs_z), SFU1610_BORE, True, "SFU1610 ナット胴")
-    for a in (45, 135, 225, 315):
-        r = SFU1610_PCD / 2
-        xang.add_hole("x", -1, (0, L.gy + r * math.cos(math.radians(a)), L.xs_z + r * math.sin(math.radians(a))),
-                      CLR_M5, True, "ナットフランジ M5 (現物合わせ)")
-    for dx in (15.0, 32.0):
-        for q in (xang, xplate):
-            q.add_hole("y", 1, (L.xp + dx, 0, L.xa_z0 + L.xa_h / 2), CLR_M6, True,
-                       "Xナットブラケット M6")
-    add(Part("X Nut", "SFU1610 Nut", "purchased", "SFU1610", (0,) * 6,
-             cyl("x", (0, L.gy, L.xs_z), SFU1610_FLANGE, L.xp + xt / 2, L.xp + xt / 2 + 10)
-             .fuse(cyl("x", (0, L.gy, L.xs_z), 28.0, L.xp - xt / 2 - 32, L.xp + xt / 2)), SCREW))
-
-    # ============================ Z 軸 ============================
-    ztop = L.zpb + L.zplate_h
-    bb = (L.xp - L.zplate_w / 2, L.xp + L.zplate_w / 2, L.y_zpf, L.y_zpb, L.zpb, ztop)
+    ztop = L.zpb_min + p.pos_z * L.z_travel + L.zplate_h
+    zpb = ztop - L.zplate_h
+    bb = (L.xp - L.zplate_w / 2, L.xp + L.zplate_w / 2, L.y_zpf, L.y_zpb, zpb, ztop)
     zplate = add(Part("Z Plate", "Z Plate (2Z)", "fabricated", f"アルミ板 t={p.plate_t:g}", bb, box(*bb), ALU,
-                      note="V4 の 1Z Plate 相当。HGR15 ×2 をスペーサー経由で背面に固定"))
-    z_rail_pos = rail_positions(L.zplate_h, p.r15_e, p.r15_pitch)
+                      note="HGR15 x2 をスペーサー経由で背面に固定 (レール可動)"))
     for sx in (-1, 1):
         x_r = L.xp + sx * p.z_car_x
-        sp_bb = (x_r - p.z_spacer_w / 2, x_r + p.z_spacer_w / 2, L.y_zpb, L.y_zpb + p.z_spacer_t, L.zpb, ztop)
-        sp = add(Part("Z Rail Spacer", "Z Rail Spacer (flat bar)", "fabricated",
-                      f"平鋼 {p.z_spacer_w:g}x{p.z_spacer_t:g}", sp_bb, box(*sp_bb), FLAT, axis="z",
-                      note="ナットブロックの逃げ代を作る"))
-        rb = (x_r - p.r15_w / 2, x_r + p.r15_w / 2, L.y_zpb + p.z_spacer_t, L.y_zpb + p.z_spacer_t + p.r15_h, L.zpb, ztop)
+        sb = (x_r - p.z_spacer_w / 2, x_r + p.z_spacer_w / 2, L.y_zpb, L.y_zpb + p.z_spacer_t, zpb, ztop)
+        sp = add(Part("Z Rail Spacer", "Z Rail Spacer (flat bar)", "fabricated", f"平鋼 {p.z_spacer_w:g}x{p.z_spacer_t:g}",
+                      sb, box(*sb), FLAT, axis="z", note="ナットブロックの逃げ代を作る"))
+        rb = (x_r - p.r15_w / 2, x_r + p.r15_w / 2, L.y_zpb + p.z_spacer_t, L.y_zpb + p.z_spacer_t + p.r15_h, zpb, ztop)
         add(Part("Z Rail", "HGR15 Rail (Z)", "purchased", f"HGR15 L={L.zplate_h:g}", rb, box(*rb), RAIL, axis="z"))
-        for zz in z_rail_pos:
+        for zz in rail_positions(L.zplate_h, p.r15_e, p.r15_pitch):
             for q in (zplate, sp):
-                q.add_hole("y", -1, (x_r, 0, L.zpb + zz), CLR_M4, True, "Zレール M4 (前面から皿ボルト)")
-    for dx in (-35, 0, 35):
-        zplate.add_hole("y", -1, (L.xp + dx, 0, L.zpb + 45), CLR_M6, True, "スピンドルクランプ M6 (現物合わせ)")
+                q.add_hole("y", -1, (x_r, 0, zpb + zz), CLR_M4, True, "Zレール M4 (前面から皿ボルト)")
+    for sx in (-1, 1):
+        for dz in (20.0, 20.0 + p.clamp_hole_v):
+            zplate.add_hole("y", -1, (L.xp + sx * p.clamp_hole_h / 2, 0, zpb + dz), CLR_M6, True,
+                            "スピンドルクランプ M6 [V4: SpindleClampHole]")
 
-    # Z 上部アングル + HM10-57 + モーター
-    za, zb, zt = p.z_angle
-    bb = (L.xp - 40, L.xp + 40, L.y_zpf - zt, L.y_zpf - zt + za, ztop + zt - zb, ztop + zt)
-    zang = add(Part("Z Top Angle", "Z Top Angle", "fabricated", f"山形鋼 L{za:g}x{zb:g}x{zt:g}", bb,
-                    slabs(bb, ["-y", "+z"], zt), STEEL, axis="x", note="HM10-57 を載せる。V4 印刷部品の代替"))
+    zt = 8.0
+    bb = (L.xp - 40, L.xp + 40, L.y_zpf - zt, L.y_zpf - zt + 75.0, ztop + zt - 75.0, ztop + zt)
+    zang = add(Part("Z Top Angle", "Z Top Angle", "fabricated", f"山形鋼 L75x75x{zt:g}", bb,
+                    slabs(bb, ["-y", "+z"], zt), STEEL, axis="x", note="HM10-57 を載せる"))
     for dx in (-25, 25):
         for q in (zang, zplate):
             q.add_hole("y", -1, (L.xp + dx, 0, ztop - 25), CLR_M6, True, "Z上部アングル M6")
@@ -367,55 +424,28 @@ def build(p):
     for dx in (-23.57, 23.57):
         for dy in (-23.57, 23.57):
             zang.add_hole("z", 1, (L.xp + dx, L.zs_y + dy, 0), CLR_M5, True, "HM10-57 M5 (現物合わせ)")
-    add_mount(add, "HM10-57", "z", (L.xp, L.zs_y, 0), ztop + zt, outward=1)
+    mb = (L.xp - 30, L.xp + 30, L.zs_y - 30, L.zs_y + 30, ztop + zt, ztop + zt + 40)
+    add(Part("HM10-57", "HM10-57", "purchased", "HM10-57", mb, box(*mb), MOUNT))
+    mb = (L.xp - 28.5, L.xp + 28.5, L.zs_y - 28.5, L.zs_y + 28.5, ztop + zt + 40, ztop + zt + 116)
+    add(Part("NEMA23 Motor Z", "NEMA23 Motor", "purchased", "NEMA23 57x57x76", mb, box(*mb), MOTOR))
     zs_len = ceil5(L.zpb_max + L.zplate_h + zt + 20 - (L.z_nut - 30))
     add(Part("Z Ballscrew", "SFU1204 Ballscrew (Z)", "purchased", f"SFU1204 L≈{zs_len:g}", (0,) * 6,
              cyl("z", (L.xp, L.zs_y, 0), 12.0, ztop + zt + 20 - zs_len, ztop + zt + 20), SCREW, axis="z"))
     nb = (L.xp - 25, L.xp + 25, L.zs_y - (L.z_gap - 4) / 2, L.zs_y + (L.z_gap - 4) / 2, L.z_nut - 20, L.z_nut + 20)
     add(Part("Z Nut Block", "SFU1204 Nut + Block", "purchased", "SFU1204 + ナットブロック", nb, box(*nb), MOUNT))
 
-    # スピンドル
-    sp_y = L.gy + L.sp_y_off
-    cb = (L.xp - 55, L.xp + 55, L.y_zpf - 95, L.y_zpf, L.zpb + 10, L.zpb + 80)
-    clamp = box(*cb).cut(cyl("z", (L.xp, sp_y, 0), p.spindle_d, cb[4] - 1, cb[5] + 1))
-    add(Part("Spindle Clamp", "80mm Spindle Clamp", "purchased", "80mm 3穴クランプ", cb, clamp, MOUNT))
-    z_nose = L.zpb - p.spindle_below
+    cw = p.clamp_hole_h + 20.0
+    cb = (L.xp - cw / 2, L.xp + cw / 2, L.y_zpf - 95, L.y_zpf, zpb + 5, zpb + 35 + p.clamp_hole_v)
+    clamp = box(*cb).cut(cyl("z", (L.xp, L.sp_y, 0), p.spindle_d, cb[4] - 1, cb[5] + 1))
+    add(Part("Spindle Clamp", "80mm Spindle Clamp", "purchased", "80mm クランプ", cb, clamp, MOUNT))
+    z_nose = zpb - p.spindle_below
     add(Part("Spindle", "Spindle 80mm", "purchased", f"Φ{p.spindle_d:g} スピンドル", (0,) * 6,
-             cyl("z", (L.xp, sp_y, 0), p.spindle_d, z_nose, z_nose + p.spindle_len)
-             .fuse(cyl("z", (L.xp, sp_y, 0), 6.0, z_nose - p.tool_stickout, z_nose)), SPINDLE))
+             cyl("z", (L.xp, L.sp_y, 0), p.spindle_d, z_nose, z_nose + p.spindle_len)
+             .fuse(cyl("z", (L.xp, L.sp_y, 0), 6.0, z_nose - p.tool_stickout, z_nose)), SPINDLE))
 
     for q in parts:
-        if q.bbox == (0,) * 6 or q.name.endswith("Tie Rod"):
+        if q.bbox == (0,) * 6:
             bb = q.shape.BoundingBox()
             q.bbox = (bb.xmin, bb.xmax, bb.ymin, bb.ymax, bb.zmin, bb.zmax)
         q.finalize()
     return parts, L
-
-
-def add_mount(add, kind, axis, c, z_base, outward):
-    """BK/BF/HM ねじサポートとモーターを簡易ブロックで配置 (購入品)。
-
-    axis: ねじ方向, c: ねじ軸上の点, z_base: 取付面高さ, outward: モーターの向き (+1/-1)
-    """
-    x, y, z = c
-    if axis == "z":   # HM10-57 を水平面に載せ、モーターを上へ
-        bb = (x - 30, x + 30, y - 30, y + 30, z_base, z_base + 40)
-        add(Part(kind, kind, "purchased", kind, bb, box(*bb), MOUNT))
-        mb = (x - 28.5, x + 28.5, y - 28.5, y + 28.5, z_base + 40, z_base + 116)
-        add(Part("NEMA23 Motor Z", "NEMA23 Motor", "purchased", "NEMA23 57x57x76", mb, box(*mb), MOTOR))
-        return
-    along = 45.0 if kind.startswith("HM") else 25.0
-    h = (z - z_base) + (30.0 if kind.startswith("HM") else 18.0)
-    if axis == "y":
-        bb = (x - 30, x + 30, y - along / 2, y + along / 2, z_base, z_base + h)
-    else:
-        bb = (x - along / 2, x + along / 2, y - 30, y + 30, z_base, z_base + h)
-    add(Part(kind, kind, "purchased", kind, bb, box(*bb), MOUNT))
-    if kind.startswith("HM"):
-        if axis == "y":
-            y0 = y + outward * along / 2
-            mb = (x - 28.5, x + 28.5, min(y0, y0 + outward * 76), max(y0, y0 + outward * 76), z - 28.5, z + 28.5)
-        else:
-            x0 = x + outward * along / 2
-            mb = (min(x0, x0 + outward * 76), max(x0, x0 + outward * 76), y - 28.5, y + 28.5, z - 28.5, z + 28.5)
-        add(Part(f"NEMA23 Motor {axis.upper()}", "NEMA23 Motor", "purchased", "NEMA23 57x57x76", mb, box(*mb), MOTOR))

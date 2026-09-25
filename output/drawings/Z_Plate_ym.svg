@@ -1,60 +1,57 @@
-<svg xmlns="http://www.w3.org/2000/svg" width="215.0mm" height="422.0mm" viewBox="0 0 215.0 422.0" font-family="Noto Sans CJK JP, IPAGothic, Hiragino Sans, Yu Gothic, Meiryo, sans-serif">
-<rect x="0" y="0" width="215.0" height="422.0" fill="white"/>
-<text x="25.0" y="7" font-size="4">Z Plate — -Y面(手前)から貫通側から見た図  外形 165 x 350 mm</text>
+<svg xmlns="http://www.w3.org/2000/svg" width="195.0mm" height="397.0mm" viewBox="0 0 195.0 397.0" font-family="Noto Sans CJK JP, IPAGothic, Hiragino Sans, Yu Gothic, Meiryo, sans-serif">
+<rect x="0" y="0" width="195.0" height="397.0" fill="white"/>
+<text x="25.0" y="7" font-size="4">Z Plate — -Y面(手前)から貫通側から見た図  外形 145 x 325 mm</text>
 <text x="25.0" y="12" font-size="3" fill="#555">縮尺 1:1 (100%で印刷して型紙に使用 / 基準辺を材料の端に合わせる)</text>
-<rect x="25.00" y="39.00" width="165.00" height="350.00" fill="none" stroke="black" stroke-width="0.3"/>
-<text x="25.0" y="394.0" font-size="3">原点 (X→, Z↑)</text>
-<circle cx="47.50" cy="369.00" r="2.25" fill="none" stroke="red" stroke-width="0.25"/>
-<path d="M45.50,369.00H49.50M47.50,367.00V371.00" stroke="red" stroke-width="0.15"/>
-<text x="50.55" y="368.20" font-size="2.2">Φ4.5 (22.5, 20)</text>
-<circle cx="167.50" cy="369.00" r="2.25" fill="none" stroke="red" stroke-width="0.25"/>
-<path d="M165.50,369.00H169.50M167.50,367.00V371.00" stroke="red" stroke-width="0.15"/>
-<text x="170.55" y="368.20" font-size="2.2">Φ4.5 (142.5, 20)</text>
-<circle cx="72.50" cy="344.00" r="3.30" fill="none" stroke="red" stroke-width="0.25"/>
-<path d="M70.50,344.00H74.50M72.50,342.00V346.00" stroke="red" stroke-width="0.15"/>
-<text x="76.60" y="343.20" font-size="2.2">Φ6.6 (47.5, 45)</text>
-<circle cx="107.50" cy="344.00" r="3.30" fill="none" stroke="red" stroke-width="0.25"/>
-<path d="M105.50,344.00H109.50M107.50,342.00V346.00" stroke="red" stroke-width="0.15"/>
-<text x="111.60" y="343.20" font-size="2.2">Φ6.6 (82.5, 45)</text>
-<circle cx="142.50" cy="344.00" r="3.30" fill="none" stroke="red" stroke-width="0.25"/>
-<path d="M140.50,344.00H144.50M142.50,342.00V346.00" stroke="red" stroke-width="0.15"/>
-<text x="146.60" y="343.20" font-size="2.2">Φ6.6 (117.5, 45)</text>
-<circle cx="47.50" cy="309.00" r="2.25" fill="none" stroke="red" stroke-width="0.25"/>
-<path d="M45.50,309.00H49.50M47.50,307.00V311.00" stroke="red" stroke-width="0.15"/>
-<text x="50.55" y="308.20" font-size="2.2">Φ4.5 (22.5, 80)</text>
-<circle cx="167.50" cy="309.00" r="2.25" fill="none" stroke="red" stroke-width="0.25"/>
-<path d="M165.50,309.00H169.50M167.50,307.00V311.00" stroke="red" stroke-width="0.15"/>
-<text x="170.55" y="308.20" font-size="2.2">Φ4.5 (142.5, 80)</text>
-<circle cx="47.50" cy="249.00" r="2.25" fill="none" stroke="red" stroke-width="0.25"/>
-<path d="M45.50,249.00H49.50M47.50,247.00V251.00" stroke="red" stroke-width="0.15"/>
-<text x="50.55" y="248.20" font-size="2.2">Φ4.5 (22.5, 140)</text>
-<circle cx="167.50" cy="249.00" r="2.25" fill="none" stroke="red" stroke-width="0.25"/>
-<path d="M165.50,249.00H169.50M167.50,247.00V251.00" stroke="red" stroke-width="0.15"/>
-<text x="170.55" y="248.20" font-size="2.2">Φ4.5 (142.5, 140)</text>
-<circle cx="47.50" cy="189.00" r="2.25" fill="none" stroke="red" stroke-width="0.25"/>
-<path d="M45.50,189.00H49.50M47.50,187.00V191.00" stroke="red" stroke-width="0.15"/>
-<text x="50.55" y="188.20" font-size="2.2">Φ4.5 (22.5, 200)</text>
-<circle cx="167.50" cy="189.00" r="2.25" fill="none" stroke="red" stroke-width="0.25"/>
-<path d="M165.50,189.00H169.50M167.50,187.00V191.00" stroke="red" stroke-width="0.15"/>
-<text x="170.55" y="188.20" font-size="2.2">Φ4.5 (142.5, 200)</text>
-<circle cx="47.50" cy="129.00" r="2.25" fill="none" stroke="red" stroke-width="0.25"/>
-<path d="M45.50,129.00H49.50M47.50,127.00V131.00" stroke="red" stroke-width="0.15"/>
-<text x="50.55" y="128.20" font-size="2.2">Φ4.5 (22.5, 260)</text>
-<circle cx="167.50" cy="129.00" r="2.25" fill="none" stroke="red" stroke-width="0.25"/>
-<path d="M165.50,129.00H169.50M167.50,127.00V131.00" stroke="red" stroke-width="0.15"/>
-<text x="170.55" y="128.20" font-size="2.2">Φ4.5 (142.5, 260)</text>
-<circle cx="47.50" cy="69.00" r="2.25" fill="none" stroke="red" stroke-width="0.25"/>
-<path d="M45.50,69.00H49.50M47.50,67.00V71.00" stroke="red" stroke-width="0.15"/>
-<text x="50.55" y="68.20" font-size="2.2">Φ4.5 (22.5, 320)</text>
-<circle cx="167.50" cy="69.00" r="2.25" fill="none" stroke="red" stroke-width="0.25"/>
-<path d="M165.50,69.00H169.50M167.50,67.00V71.00" stroke="red" stroke-width="0.15"/>
-<text x="170.55" y="68.20" font-size="2.2">Φ4.5 (142.5, 320)</text>
-<circle cx="82.50" cy="64.00" r="3.30" fill="none" stroke="red" stroke-width="0.25"/>
-<path d="M80.50,64.00H84.50M82.50,62.00V66.00" stroke="red" stroke-width="0.15"/>
-<text x="86.60" y="63.20" font-size="2.2">Φ6.6 (57.5, 325)</text>
-<circle cx="132.50" cy="64.00" r="3.30" fill="none" stroke="red" stroke-width="0.25"/>
-<path d="M130.50,64.00H134.50M132.50,62.00V66.00" stroke="red" stroke-width="0.15"/>
-<text x="136.60" y="63.20" font-size="2.2">Φ6.6 (107.5, 325)</text>
-<path d="M25.0,417.0h100.00" stroke="black" stroke-width="0.5"/>
-<text x="25.0" y="415.5" font-size="2.5">100 mm</text>
+<rect x="25.00" y="39.00" width="145.00" height="325.00" fill="none" stroke="black" stroke-width="0.3"/>
+<text x="25.0" y="369.0" font-size="3">原点 (X→, Z↑)</text>
+<circle cx="35.00" cy="344.00" r="3.30" fill="none" stroke="red" stroke-width="0.25"/>
+<path d="M33.00,344.00H37.00M35.00,342.00V346.00" stroke="red" stroke-width="0.15"/>
+<text x="39.10" y="343.20" font-size="2.2">Φ6.6 (10, 20)</text>
+<circle cx="47.50" cy="344.00" r="2.25" fill="none" stroke="red" stroke-width="0.25"/>
+<path d="M45.50,344.00H49.50M47.50,342.00V346.00" stroke="red" stroke-width="0.15"/>
+<text x="50.55" y="343.20" font-size="2.2">Φ4.5 (22.5, 20)</text>
+<circle cx="147.50" cy="344.00" r="2.25" fill="none" stroke="red" stroke-width="0.25"/>
+<path d="M145.50,344.00H149.50M147.50,342.00V346.00" stroke="red" stroke-width="0.15"/>
+<text x="150.55" y="343.20" font-size="2.2">Φ4.5 (122.5, 20)</text>
+<circle cx="160.00" cy="344.00" r="3.30" fill="none" stroke="red" stroke-width="0.25"/>
+<path d="M158.00,344.00H162.00M160.00,342.00V346.00" stroke="red" stroke-width="0.15"/>
+<text x="164.10" y="343.20" font-size="2.2">Φ6.6 (135, 20)</text>
+<circle cx="47.50" cy="284.00" r="2.25" fill="none" stroke="red" stroke-width="0.25"/>
+<path d="M45.50,284.00H49.50M47.50,282.00V286.00" stroke="red" stroke-width="0.15"/>
+<text x="50.55" y="283.20" font-size="2.2">Φ4.5 (22.5, 80)</text>
+<circle cx="147.50" cy="284.00" r="2.25" fill="none" stroke="red" stroke-width="0.25"/>
+<path d="M145.50,284.00H149.50M147.50,282.00V286.00" stroke="red" stroke-width="0.15"/>
+<text x="150.55" y="283.20" font-size="2.2">Φ4.5 (122.5, 80)</text>
+<circle cx="35.00" cy="280.00" r="3.30" fill="none" stroke="red" stroke-width="0.25"/>
+<path d="M33.00,280.00H37.00M35.00,278.00V282.00" stroke="red" stroke-width="0.15"/>
+<text x="39.10" y="279.20" font-size="2.2">Φ6.6 (10, 84)</text>
+<circle cx="160.00" cy="280.00" r="3.30" fill="none" stroke="red" stroke-width="0.25"/>
+<path d="M158.00,280.00H162.00M160.00,278.00V282.00" stroke="red" stroke-width="0.15"/>
+<text x="164.10" y="279.20" font-size="2.2">Φ6.6 (135, 84)</text>
+<circle cx="47.50" cy="224.00" r="2.25" fill="none" stroke="red" stroke-width="0.25"/>
+<path d="M45.50,224.00H49.50M47.50,222.00V226.00" stroke="red" stroke-width="0.15"/>
+<text x="50.55" y="223.20" font-size="2.2">Φ4.5 (22.5, 140)</text>
+<circle cx="147.50" cy="224.00" r="2.25" fill="none" stroke="red" stroke-width="0.25"/>
+<path d="M145.50,224.00H149.50M147.50,222.00V226.00" stroke="red" stroke-width="0.15"/>
+<text x="150.55" y="223.20" font-size="2.2">Φ4.5 (122.5, 140)</text>
+<circle cx="47.50" cy="164.00" r="2.25" fill="none" stroke="red" stroke-width="0.25"/>
+<path d="M45.50,164.00H49.50M47.50,162.00V166.00" stroke="red" stroke-width="0.15"/>
+<text x="50.55" y="163.20" font-size="2.2">Φ4.5 (22.5, 200)</text>
+<circle cx="147.50" cy="164.00" r="2.25" fill="none" stroke="red" stroke-width="0.25"/>
+<path d="M145.50,164.00H149.50M147.50,162.00V166.00" stroke="red" stroke-width="0.15"/>
+<text x="150.55" y="163.20" font-size="2.2">Φ4.5 (122.5, 200)</text>
+<circle cx="47.50" cy="104.00" r="2.25" fill="none" stroke="red" stroke-width="0.25"/>
+<path d="M45.50,104.00H49.50M47.50,102.00V106.00" stroke="red" stroke-width="0.15"/>
+<text x="50.55" y="103.20" font-size="2.2">Φ4.5 (22.5, 260)</text>
+<circle cx="147.50" cy="104.00" r="2.25" fill="none" stroke="red" stroke-width="0.25"/>
+<path d="M145.50,104.00H149.50M147.50,102.00V106.00" stroke="red" stroke-width="0.15"/>
+<text x="150.55" y="103.20" font-size="2.2">Φ4.5 (122.5, 260)</text>
+<circle cx="72.50" cy="64.00" r="3.30" fill="none" stroke="red" stroke-width="0.25"/>
+<path d="M70.50,64.00H74.50M72.50,62.00V66.00" stroke="red" stroke-width="0.15"/>
+<text x="76.60" y="63.20" font-size="2.2">Φ6.6 (47.5, 300)</text>
+<circle cx="122.50" cy="64.00" r="3.30" fill="none" stroke="red" stroke-width="0.25"/>
+<path d="M120.50,64.00H124.50M122.50,62.00V66.00" stroke="red" stroke-width="0.15"/>
+<text x="126.60" y="63.20" font-size="2.2">Φ6.6 (97.5, 300)</text>
+<path d="M25.0,392.0h100.00" stroke="black" stroke-width="0.5"/>
+<text x="25.0" y="390.5" font-size="2.5">100 mm</text>
 </svg>

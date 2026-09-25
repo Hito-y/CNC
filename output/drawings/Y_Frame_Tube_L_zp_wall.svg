@@ -1,45 +1,39 @@
-<svg xmlns="http://www.w3.org/2000/svg" width="66.7mm" height="362.7mm" viewBox="0 0 66.7 362.7" font-family="Noto Sans CJK JP, IPAGothic, Hiragino Sans, Yu Gothic, Meiryo, sans-serif">
-<rect x="0" y="0" width="66.7" height="362.7" fill="white"/>
-<text x="25.0" y="7" font-size="4">Y Frame Tube L — +Z面(上)側から見た図  外形 50 x 872 mm</text>
-<text x="25.0" y="12" font-size="3" fill="#555">縮尺 1:3 (型紙ではない。寸法は穴位置表 CSV を使用)</text>
-<rect x="25.00" y="39.00" width="16.67" height="290.67" fill="none" stroke="black" stroke-width="0.3"/>
-<text x="25.0" y="334.7" font-size="3">原点 (X→, Y↑)</text>
-<circle cx="33.33" cy="289.00" r="0.70" fill="none" stroke="red" stroke-width="0.25"/>
-<path d="M31.33,289.00H35.33M33.33,287.00V291.00" stroke="red" stroke-width="0.15"/>
-<text x="34.83" y="288.20" font-size="1.8">Φ4.2 (25, 122)</text>
-<circle cx="33.33" cy="269.00" r="0.70" fill="none" stroke="red" stroke-width="0.25"/>
-<path d="M31.33,269.00H35.33M33.33,267.00V271.00" stroke="red" stroke-width="0.15"/>
-<text x="34.83" y="268.20" font-size="1.8">Φ4.2 (25, 182)</text>
-<circle cx="33.33" cy="249.00" r="0.70" fill="none" stroke="red" stroke-width="0.25"/>
-<path d="M31.33,249.00H35.33M33.33,247.00V251.00" stroke="red" stroke-width="0.15"/>
-<text x="34.83" y="248.20" font-size="1.8">Φ4.2 (25, 242)</text>
-<circle cx="33.33" cy="229.00" r="0.70" fill="none" stroke="red" stroke-width="0.25"/>
-<path d="M31.33,229.00H35.33M33.33,227.00V231.00" stroke="red" stroke-width="0.15"/>
-<text x="34.83" y="228.20" font-size="1.8">Φ4.2 (25, 302)</text>
-<circle cx="33.33" cy="209.00" r="0.70" fill="none" stroke="red" stroke-width="0.25"/>
-<path d="M31.33,209.00H35.33M33.33,207.00V211.00" stroke="red" stroke-width="0.15"/>
-<text x="34.83" y="208.20" font-size="1.8">Φ4.2 (25, 362)</text>
-<circle cx="33.33" cy="189.00" r="0.70" fill="none" stroke="red" stroke-width="0.25"/>
-<path d="M31.33,189.00H35.33M33.33,187.00V191.00" stroke="red" stroke-width="0.15"/>
-<text x="34.83" y="188.20" font-size="1.8">Φ4.2 (25, 422)</text>
-<circle cx="33.33" cy="169.00" r="0.70" fill="none" stroke="red" stroke-width="0.25"/>
-<path d="M31.33,169.00H35.33M33.33,167.00V171.00" stroke="red" stroke-width="0.15"/>
-<text x="34.83" y="168.20" font-size="1.8">Φ4.2 (25, 482)</text>
-<circle cx="33.33" cy="149.00" r="0.70" fill="none" stroke="red" stroke-width="0.25"/>
-<path d="M31.33,149.00H35.33M33.33,147.00V151.00" stroke="red" stroke-width="0.15"/>
-<text x="34.83" y="148.20" font-size="1.8">Φ4.2 (25, 542)</text>
-<circle cx="33.33" cy="129.00" r="0.70" fill="none" stroke="red" stroke-width="0.25"/>
-<path d="M31.33,129.00H35.33M33.33,127.00V131.00" stroke="red" stroke-width="0.15"/>
-<text x="34.83" y="128.20" font-size="1.8">Φ4.2 (25, 602)</text>
-<circle cx="33.33" cy="109.00" r="0.70" fill="none" stroke="red" stroke-width="0.25"/>
-<path d="M31.33,109.00H35.33M33.33,107.00V111.00" stroke="red" stroke-width="0.15"/>
-<text x="34.83" y="108.20" font-size="1.8">Φ4.2 (25, 662)</text>
-<circle cx="33.33" cy="89.00" r="0.70" fill="none" stroke="red" stroke-width="0.25"/>
-<path d="M31.33,89.00H35.33M33.33,87.00V91.00" stroke="red" stroke-width="0.15"/>
-<text x="34.83" y="88.20" font-size="1.8">Φ4.2 (25, 722)</text>
-<circle cx="33.33" cy="69.00" r="0.70" fill="none" stroke="red" stroke-width="0.25"/>
-<path d="M31.33,69.00H35.33M33.33,67.00V71.00" stroke="red" stroke-width="0.15"/>
-<text x="34.83" y="68.20" font-size="1.8">Φ4.2 (25, 782)</text>
-<path d="M25.0,357.6666666666667h33.33" stroke="black" stroke-width="0.5"/>
-<text x="25.0" y="356.1666666666667" font-size="2.5">100 mm</text>
+<svg xmlns="http://www.w3.org/2000/svg" width="75.0mm" height="442.0mm" viewBox="0 0 75.0 442.0" font-family="Noto Sans CJK JP, IPAGothic, Hiragino Sans, Yu Gothic, Meiryo, sans-serif">
+<rect x="0" y="0" width="75.0" height="442.0" fill="white"/>
+<text x="25.0" y="7" font-size="4">Y Frame Tube L — +Z面(上)側から見た図  外形 50 x 740 mm</text>
+<text x="25.0" y="12" font-size="3" fill="#555">縮尺 1:2 (型紙ではない。寸法は穴位置表 CSV を使用)</text>
+<rect x="25.00" y="39.00" width="25.00" height="370.00" fill="none" stroke="black" stroke-width="0.3"/>
+<text x="25.0" y="414.0" font-size="3">原点 (X→, Y↑)</text>
+<circle cx="37.50" cy="364.00" r="1.05" fill="none" stroke="red" stroke-width="0.25"/>
+<path d="M35.50,364.00H39.50M37.50,362.00V366.00" stroke="red" stroke-width="0.15"/>
+<text x="39.35" y="363.20" font-size="1.8">Φ4.2 (25, 90)</text>
+<circle cx="37.50" cy="334.00" r="1.05" fill="none" stroke="red" stroke-width="0.25"/>
+<path d="M35.50,334.00H39.50M37.50,332.00V336.00" stroke="red" stroke-width="0.15"/>
+<text x="39.35" y="333.20" font-size="1.8">Φ4.2 (25, 150)</text>
+<circle cx="37.50" cy="304.00" r="1.05" fill="none" stroke="red" stroke-width="0.25"/>
+<path d="M35.50,304.00H39.50M37.50,302.00V306.00" stroke="red" stroke-width="0.15"/>
+<text x="39.35" y="303.20" font-size="1.8">Φ4.2 (25, 210)</text>
+<circle cx="37.50" cy="274.00" r="1.05" fill="none" stroke="red" stroke-width="0.25"/>
+<path d="M35.50,274.00H39.50M37.50,272.00V276.00" stroke="red" stroke-width="0.15"/>
+<text x="39.35" y="273.20" font-size="1.8">Φ4.2 (25, 270)</text>
+<circle cx="37.50" cy="244.00" r="1.05" fill="none" stroke="red" stroke-width="0.25"/>
+<path d="M35.50,244.00H39.50M37.50,242.00V246.00" stroke="red" stroke-width="0.15"/>
+<text x="39.35" y="243.20" font-size="1.8">Φ4.2 (25, 330)</text>
+<circle cx="37.50" cy="214.00" r="1.05" fill="none" stroke="red" stroke-width="0.25"/>
+<path d="M35.50,214.00H39.50M37.50,212.00V216.00" stroke="red" stroke-width="0.15"/>
+<text x="39.35" y="213.20" font-size="1.8">Φ4.2 (25, 390)</text>
+<circle cx="37.50" cy="184.00" r="1.05" fill="none" stroke="red" stroke-width="0.25"/>
+<path d="M35.50,184.00H39.50M37.50,182.00V186.00" stroke="red" stroke-width="0.15"/>
+<text x="39.35" y="183.20" font-size="1.8">Φ4.2 (25, 450)</text>
+<circle cx="37.50" cy="154.00" r="1.05" fill="none" stroke="red" stroke-width="0.25"/>
+<path d="M35.50,154.00H39.50M37.50,152.00V156.00" stroke="red" stroke-width="0.15"/>
+<text x="39.35" y="153.20" font-size="1.8">Φ4.2 (25, 510)</text>
+<circle cx="37.50" cy="124.00" r="1.05" fill="none" stroke="red" stroke-width="0.25"/>
+<path d="M35.50,124.00H39.50M37.50,122.00V126.00" stroke="red" stroke-width="0.15"/>
+<text x="39.35" y="123.20" font-size="1.8">Φ4.2 (25, 570)</text>
+<circle cx="37.50" cy="94.00" r="1.05" fill="none" stroke="red" stroke-width="0.25"/>
+<path d="M35.50,94.00H39.50M37.50,92.00V96.00" stroke="red" stroke-width="0.15"/>
+<text x="39.35" y="93.20" font-size="1.8">Φ4.2 (25, 630)</text>
+<path d="M25.0,437.0h50.00" stroke="black" stroke-width="0.5"/>
+<text x="25.0" y="435.5" font-size="2.5">100 mm</text>
 </svg>

@@ -1,0 +1,15 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="125.0mm" height="122.0mm" viewBox="0 0 125.0 122.0" font-family="Noto Sans CJK JP, IPAGothic, Hiragino Sans, Yu Gothic, Meiryo, sans-serif">
+<rect x="0" y="0" width="125.0" height="122.0" fill="white"/>
+<text x="25.0" y="7" font-size="4">Gantry Brace L — +Z面(上)から貫通側から見た図  外形 75 x 50 mm</text>
+<text x="25.0" y="12" font-size="3" fill="#555">縮尺 1:1 (100%で印刷して型紙に使用 / 基準辺を材料の端に合わせる)</text>
+<rect x="25.00" y="39.00" width="75.00" height="50.00" fill="none" stroke="black" stroke-width="0.3"/>
+<text x="25.0" y="94.0" font-size="3">原点 (X→, Y↑)</text>
+<circle cx="42.50" cy="64.00" r="4.50" fill="none" stroke="red" stroke-width="0.25"/>
+<path d="M40.50,64.00H44.50M42.50,62.00V66.00" stroke="red" stroke-width="0.15"/>
+<text x="47.80" y="63.20" font-size="2.2">Φ9 (17.5, 25)</text>
+<circle cx="82.50" cy="64.00" r="4.50" fill="none" stroke="red" stroke-width="0.25"/>
+<path d="M80.50,64.00H84.50M82.50,62.00V66.00" stroke="red" stroke-width="0.15"/>
+<text x="87.80" y="63.20" font-size="2.2">Φ9 (57.5, 25)</text>
+<path d="M25.0,117.0h100.00" stroke="black" stroke-width="0.5"/>
+<text x="25.0" y="115.5" font-size="2.5">100 mm</text>
+</svg>

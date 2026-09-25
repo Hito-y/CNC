@@ -1,0 +1,33 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="370.0mm" height="109.5mm" viewBox="0 0 370.0 109.5" font-family="Noto Sans CJK JP, IPAGothic, Hiragino Sans, Yu Gothic, Meiryo, sans-serif">
+<rect x="0" y="0" width="370.0" height="109.5" fill="white"/>
+<text x="25.0" y="7" font-size="4">X Gantry Tube — +Z面(上)側から見た図  外形 640 x 75 mm</text>
+<text x="25.0" y="12" font-size="3" fill="#555">縮尺 1:2 (型紙ではない。寸法は穴位置表 CSV を使用)</text>
+<rect x="25.00" y="39.00" width="320.00" height="37.50" fill="none" stroke="black" stroke-width="0.3"/>
+<text x="25.0" y="81.5" font-size="3">原点 (X→, Y↑)</text>
+<circle cx="75.00" cy="57.75" r="1.05" fill="none" stroke="red" stroke-width="0.25"/>
+<path d="M73.00,57.75H77.00M75.00,55.75V59.75" stroke="red" stroke-width="0.15"/>
+<text x="76.85" y="56.95" font-size="1.8">Φ4.2 (100, 37.5)</text>
+<circle cx="105.00" cy="57.75" r="1.05" fill="none" stroke="red" stroke-width="0.25"/>
+<path d="M103.00,57.75H107.00M105.00,55.75V59.75" stroke="red" stroke-width="0.15"/>
+<text x="106.85" y="56.95" font-size="1.8">Φ4.2 (160, 37.5)</text>
+<circle cx="135.00" cy="57.75" r="1.05" fill="none" stroke="red" stroke-width="0.25"/>
+<path d="M133.00,57.75H137.00M135.00,55.75V59.75" stroke="red" stroke-width="0.15"/>
+<text x="136.85" y="56.95" font-size="1.8">Φ4.2 (220, 37.5)</text>
+<circle cx="165.00" cy="57.75" r="1.05" fill="none" stroke="red" stroke-width="0.25"/>
+<path d="M163.00,57.75H167.00M165.00,55.75V59.75" stroke="red" stroke-width="0.15"/>
+<text x="166.85" y="56.95" font-size="1.8">Φ4.2 (280, 37.5)</text>
+<circle cx="195.00" cy="57.75" r="1.05" fill="none" stroke="red" stroke-width="0.25"/>
+<path d="M193.00,57.75H197.00M195.00,55.75V59.75" stroke="red" stroke-width="0.15"/>
+<text x="196.85" y="56.95" font-size="1.8">Φ4.2 (340, 37.5)</text>
+<circle cx="225.00" cy="57.75" r="1.05" fill="none" stroke="red" stroke-width="0.25"/>
+<path d="M223.00,57.75H227.00M225.00,55.75V59.75" stroke="red" stroke-width="0.15"/>
+<text x="226.85" y="56.95" font-size="1.8">Φ4.2 (400, 37.5)</text>
+<circle cx="255.00" cy="57.75" r="1.05" fill="none" stroke="red" stroke-width="0.25"/>
+<path d="M253.00,57.75H257.00M255.00,55.75V59.75" stroke="red" stroke-width="0.15"/>
+<text x="256.85" y="56.95" font-size="1.8">Φ4.2 (460, 37.5)</text>
+<circle cx="285.00" cy="57.75" r="1.05" fill="none" stroke="red" stroke-width="0.25"/>
+<path d="M283.00,57.75H287.00M285.00,55.75V59.75" stroke="red" stroke-width="0.15"/>
+<text x="286.85" y="56.95" font-size="1.8">Φ4.2 (520, 37.5)</text>
+<path d="M25.0,104.5h50.00" stroke="black" stroke-width="0.5"/>
+<text x="25.0" y="103.0" font-size="2.5">100 mm</text>
+</svg>

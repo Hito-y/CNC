@@ -1,0 +1,15 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="110.0mm" height="127.0mm" viewBox="0 0 110.0 127.0" font-family="Noto Sans CJK JP, IPAGothic, Hiragino Sans, Yu Gothic, Meiryo, sans-serif">
+<rect x="0" y="0" width="110.0" height="127.0" fill="white"/>
+<text x="25.0" y="7" font-size="4">Y BF12 Angle R — +X面(右)から貫通側から見た図  外形 60 x 55 mm</text>
+<text x="25.0" y="12" font-size="3" fill="#555">縮尺 1:1 (100%で印刷して型紙に使用 / 基準辺を材料の端に合わせる)</text>
+<rect x="25.00" y="39.00" width="60.00" height="55.00" fill="none" stroke="black" stroke-width="0.3"/>
+<text x="25.0" y="99.0" font-size="3">原点 (Y→, Z↑)</text>
+<circle cx="40.00" cy="69.00" r="4.50" fill="none" stroke="red" stroke-width="0.25"/>
+<path d="M38.00,69.00H42.00M40.00,67.00V71.00" stroke="red" stroke-width="0.15"/>
+<text x="45.30" y="68.20" font-size="2.2">Φ9 (15, 25)</text>
+<circle cx="70.00" cy="69.00" r="4.50" fill="none" stroke="red" stroke-width="0.25"/>
+<path d="M68.00,69.00H72.00M70.00,67.00V71.00" stroke="red" stroke-width="0.15"/>
+<text x="75.30" y="68.20" font-size="2.2">Φ9 (45, 25)</text>
+<path d="M25.0,122.0h100.00" stroke="black" stroke-width="0.5"/>
+<text x="25.0" y="120.5" font-size="2.5">100 mm</text>
+</svg>
