@@ -39,6 +39,17 @@
 
 実行方法: Fusion → ユーティリティ → アドイン → スクリプトとアドイン → スクリプトの「+」で `tools/F3dToStep` フォルダを追加 → 実行。
 
+### Fusion を使わない方法 (Autodesk のクラウド変換)
+
+[`tools/f3d_to_step_aps.py`](tools/f3d_to_step_aps.py) は Autodesk Platform Services (APS) の Model Derivative API に
+`.f3d` をアップロードして STEP を受け取る。APS のアカウントと Client ID / Secret が必要 (Fusion のインストールは不要)。
+
+```bash
+export APS_CLIENT_ID=... APS_CLIENT_SECRET=...
+python tools/f3d_to_step_aps.py --list-formats        # f3d から変換できる形式を確認
+python tools/f3d_to_step_aps.py PrintNC_V4.f3d         # -> PrintNC_V4.step
+```
+
 ## 使い方
 
 ```bash
